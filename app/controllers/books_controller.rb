@@ -1,10 +1,12 @@
 class BooksController < ApplicationController
+  before_action :set_category, except: [:all, :new, :create]
   before_action :set_book, only: [:show, :edit, :update, :destroy]
+  before_action :get_meta_data, only: [:new, :edit]
 
   # GET /books
   # GET /books.json
   def index
-    @books = Book.all
+    @books = @category.books
   end
 
   # GET /books/1
@@ -28,8 +30,8 @@ class BooksController < ApplicationController
 
     respond_to do |format|
       if @book.save
-        format.html { redirect_to @book, notice: 'Book was successfully created.' }
-        format.json { render :show, status: :created, location: @book }
+        format.html { redirect_to [@book.category, @book], notice: 'Book was successfully created.' }
+        format.json { render :show, status: :created, location: [@book.category, @book] }
       else
         format.html { render :new }
         format.json { render json: @book.errors, status: :unprocessable_entity }
@@ -42,8 +44,8 @@ class BooksController < ApplicationController
   def update
     respond_to do |format|
       if @book.update(book_params)
-        format.html { redirect_to @book, notice: 'Book was successfully updated.' }
-        format.json { render :show, status: :ok, location: @book }
+        format.html { redirect_to [@book.category, @book], notice: 'Book was successfully updated.' }
+        format.json { render :show, status: :ok, location: [@book.category, @book] }
       else
         format.html { render :edit }
         format.json { render json: @book.errors, status: :unprocessable_entity }
@@ -56,8 +58,16 @@ class BooksController < ApplicationController
   def destroy
     @book.destroy
     respond_to do |format|
-      format.html { redirect_to books_url, notice: 'Book was successfully destroyed.' }
+      format.html { redirect_to category_books_url, notice: 'Book was successfully destroyed.' }
       format.json { head :no_content }
+    end
+  end
+
+  def all
+    @books = Book.all
+
+    respond_to do |format|
+      format.html { render :index }
     end
   end
 
@@ -65,10 +75,21 @@ class BooksController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_book
       @book = Book.find(params[:id])
+
+      redirect_to [@book.category, @book] if @book.category != @category
+    end
+
+    def set_category
+      @category = Category.find(params[:category_id])
+    end
+
+    def get_meta_data
+      @categories = Category.all
+      @authors = Author.all
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def book_params
-      params.require(:book).permit(:title, :description, :books_in_stock)
+      params.require(:book).permit(:title, :price, :description, :books_in_stock, :category_id, :author_id)
     end
 end

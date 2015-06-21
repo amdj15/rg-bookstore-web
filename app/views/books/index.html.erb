@@ -18,9 +18,10 @@
         <td><%= book.title %></td>
         <td><%= book.description %></td>
         <td><%= book.books_in_stock %></td>
-        <td><%= link_to 'Show', book %></td>
-        <td><%= link_to 'Edit', edit_book_path(book) %></td>
-        <td><%= link_to 'Destroy', book, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+
+        <td><%= link_to 'Show', [book.category, book] %></td>
+        <td><%= link_to 'Edit', [:edit, book.category, book] %></td>
+        <td><%= link_to 'Destroy', [book.category, book], method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
