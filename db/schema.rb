@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150615002607) do
+ActiveRecord::Schema.define(version: 20150623215422) do
 
   create_table "addresses", force: :cascade do |t|
     t.string   "address",    limit: 255
@@ -114,14 +114,16 @@ ActiveRecord::Schema.define(version: 20150615002607) do
   add_index "orders", ["shipping_address_id"], name: "index_orders_on_shipping_address_id", using: :btree
 
   create_table "ratings", force: :cascade do |t|
-    t.integer  "rating",     limit: 4
-    t.text     "review",     limit: 65535
-    t.integer  "item_id",    limit: 4
-    t.string   "item_type",  limit: 255
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
+    t.integer  "rating",      limit: 4
+    t.text     "review",      limit: 65535
+    t.integer  "item_id",     limit: 4
+    t.string   "item_type",   limit: 255
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+    t.integer  "customer_id", limit: 4
   end
 
+  add_index "ratings", ["customer_id"], name: "index_ratings_on_customer_id", using: :btree
   add_index "ratings", ["item_type", "item_id"], name: "index_ratings_on_item_type_and_item_id", using: :btree
 
   add_foreign_key "books", "authors"
@@ -131,4 +133,5 @@ ActiveRecord::Schema.define(version: 20150615002607) do
   add_foreign_key "order_items", "orders"
   add_foreign_key "orders", "credit_cards"
   add_foreign_key "orders", "customers"
+  add_foreign_key "ratings", "customers"
 end
