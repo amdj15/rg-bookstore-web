@@ -5,6 +5,7 @@ FactoryGirl.define do
     end
 
     password { Faker::Internet.password(10, 20) }
+    password_confirmation { "#{password}" }
     firstname { Faker::Name.first_name }
     lastname { Faker::Name.last_name }
   end

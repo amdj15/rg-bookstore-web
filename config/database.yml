@@ -12,7 +12,7 @@ default: &default
 development:
   adapter: mysql2
   encoding: utf8
-  database: bookstore_dev
+  database: bookstore_web_dev
   username: root
   password: root
   socket: /Applications/MAMP/tmp/mysql/mysql.sock
@@ -20,7 +20,7 @@ development:
 test:
   adapter: mysql2
   encoding: utf8
-  database: bookstore_test
+  database: bookstore_web_test
   username: root
   password: root
   socket: /Applications/MAMP/tmp/mysql/mysql.sock

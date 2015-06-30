@@ -1,1 +1,1 @@
-rvm use 2.2.1@bookstore --create
+rvm use 2.2.1@bookstore-web --create

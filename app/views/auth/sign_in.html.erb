@@ -1,0 +1,31 @@
+<h1>Sign in</h1>
+
+<p id="notice"><%= notice %></p>
+
+<%= form_tag auth_authenticate_path do %>
+	<% if @customer.errors.any? %>
+		<div id="error_explanation">
+			<h2><%= pluralize(@customer.errors.size, "error") %> prohibited this customer from being saved:</h2>
+
+			<ul>
+				<% @customer.errors.full_messages.each do |message| %>
+				<li><%= message %></li>
+				<% end %>
+			</ul>
+		</div>
+	<% end %>
+
+	<div class="field">
+		<%= label_tag :email %>
+		<%= text_field_tag :email %>
+	</div>
+
+	<div class="field">
+		<%= label_tag :password %>
+		<%= password_field_tag :password %>
+	</div>
+
+	<div class="actions">
+		<%= submit_tag "Sign In" %>
+	</div>
+<% end %>

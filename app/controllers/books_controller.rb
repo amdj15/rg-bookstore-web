@@ -1,13 +1,9 @@
 class BooksController < ApplicationController
+  before_action :admin_access, only: [:new, :edit, :create, :update, :destroy]
+
   before_action :set_category, except: [:all, :new, :create]
   before_action :set_book, only: [:show, :edit, :update, :destroy]
-  before_action :get_meta_data, only: [:new, :edit]
-
-  # GET /books
-  # GET /books.json
-  def index
-    @books = @category.books
-  end
+  before_action :get_meta_data, only: [:new, :edit, :create]
 
   # GET /books/1
   # GET /books/1.json
