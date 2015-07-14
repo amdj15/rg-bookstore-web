@@ -7,6 +7,7 @@ class ApplicationController < ActionController::Base
 
   helper_method :current_user
   helper_method :is_admin?
+  helper_method :authenticated?
 
   private
     def authenticated?

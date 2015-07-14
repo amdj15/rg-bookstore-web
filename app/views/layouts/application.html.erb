@@ -38,6 +38,21 @@
               <a href="<%= authors_path %>">Authors</a>
             </li>
           </ul>
+
+          <ul class="nav navbar-nav navbar-right">
+            <% if authenticated? %>
+              <li>
+                <%= link_to "Sign Out", auth_sign_out_path %>
+              </li>
+            <% else %>
+              <li>
+                <%= link_to "Sign In", auth_sign_in_path %>
+              </li>
+              <li>
+                <%= link_to "Sign Up", new_customer_path %>
+              </li>
+            <% end %>
+          </ul>
         </div>
       </div>
     </nav>
