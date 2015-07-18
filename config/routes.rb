@@ -1,10 +1,13 @@
 Rails.application.routes.draw do
+  get 'orders' => 'orders#index'
+
+  devise_for :customers, path: "auth"
   root "books#all"
 
-  get 'auth/sign_in'
-  get 'auth/sign_out'
-  get 'auth/sign_up' => 'customers#new', as: 'new_customer'
-  post 'auth/authenticate'
+  # get 'auth/sign_in'
+  # get 'auth/sign_out'
+  # get 'auth/sign_up' => 'customers#new', as: 'new_customer'
+  # post 'auth/authenticate'
 
   resources :customers, only: [:create]
   resources :authors

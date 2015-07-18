@@ -1,5 +1,5 @@
 class BooksController < ApplicationController
-  before_action :admin_access, only: [:new, :edit, :create, :update, :destroy]
+  # before_action :admin_access, only: [:new, :edit, :create, :update, :destroy]
 
   before_action :set_category, except: [:all, :new, :create]
   before_action :set_book, only: [:show, :edit, :update, :destroy]

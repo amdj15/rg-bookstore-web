@@ -1,9 +1,9 @@
 class CustomersController < ApplicationController
-  before_action :unlogged_access, only: [:new, :create]
+  # before_action :unlogged_access, only: [:new, :create]
 
-  def new
-    @customer = Customer.new
-  end
+  # def new
+  #   @customer = Customer.new
+  # end
 
   def create
     @customer = Customer.new(customer_params)

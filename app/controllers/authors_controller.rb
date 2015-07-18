@@ -1,5 +1,5 @@
 class AuthorsController < ApplicationController
-  before_action :admin_access, only: [:new, :edit, :create, :update, :destroy]
+  # before_action :admin_access, only: [:new, :edit, :create, :update, :destroy]
   before_action :set_author, only: [:show, :edit, :update, :destroy]
 
   # GET /authors

@@ -40,16 +40,16 @@
           </ul>
 
           <ul class="nav navbar-nav navbar-right">
-            <% if authenticated? %>
+            <% if customer_signed_in? %>
               <li>
-                <%= link_to "Sign Out", auth_sign_out_path %>
+                <%= link_to 'Sign Out', destroy_customer_session_path, :method => :delete %>
               </li>
             <% else %>
               <li>
-                <%= link_to "Sign In", auth_sign_in_path %>
+                <%= link_to 'Sign In', new_customer_session_path %>
               </li>
               <li>
-                <%= link_to "Sign Up", new_customer_path %>
+                <%= link_to 'Sign Up', new_customer_registration_path %>
               </li>
             <% end %>
           </ul>
@@ -58,12 +58,9 @@
     </nav>
 
     <div class="content container">
-     <!--  <div id="authenticated">
-        <% if current_user %>
-        <%= current_user.email %>
-        <%= link_to "Sign Out", auth_sign_out_path %>
-        <% end %>
-      </div> -->
+      <p class="notice"><%= notice %></p>
+      <p class="alert"><%= alert %></p>
+
       <%= yield %>
     </div>
 
