@@ -16,7 +16,7 @@ RSpec.describe AuthorsController, type: :controller do
     end
 
     it "receive find and return author" do
-      # expect(Author).to receive(:find).with(author.id.to_s)
+      expect(Author).to receive(:find).with(author.id.to_s)
       get :show, id: author.id
     end
 

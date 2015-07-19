@@ -1,20 +1,15 @@
 Rails.application.routes.draw do
+  mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   get 'orders' => 'orders#index'
 
   devise_for :customers, path: "auth"
+
   root "books#all"
 
-  # get 'auth/sign_in'
-  # get 'auth/sign_out'
-  # get 'auth/sign_up' => 'customers#new', as: 'new_customer'
-  # post 'auth/authenticate'
-
   resources :customers, only: [:create]
-  resources :authors
+  resources :authors, only: [:show, :index]
 
-  resources :categories do
-    resources :books, only: [:show, :edit, :update, :destroy]
+  resources :categories, only: [:show, :index] do
+    resources :books, only: [:show]
   end
-
-  resources :books, only: [:new, :create]
 end

@@ -17,4 +17,8 @@ class Customer < ActiveRecord::Base
   def create_order
     Order.new customer: self
   end
+
+  def is_admin?
+    admin
+  end
 end

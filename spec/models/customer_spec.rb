@@ -15,22 +15,6 @@ RSpec.describe Customer, type: :model do
 
   it { expect(customer).to respond_to(:create_order) }
 
-  context "changed password" do
-    it "should changed password hash when update password", yo:true do
-      customer.password = "1111"
-      allow(customer.class).to receive(:generate_hash).with(customer.password)
-
-      customer.save
-    end
-
-    it "should not changed password hash when password is not updated" do
-      customer.firstname = Faker::Name.first_name
-      expect(customer.class).not_to receive(:generate_hash)
-
-      customer.save
-    end
-  end
-
   context "#create_order" do
     let(:order) { customer.create_order }
 

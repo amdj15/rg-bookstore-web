@@ -15,5 +15,23 @@
   <%= @author.biography %>
 </p>
 
-<%= link_to 'Edit', edit_author_path(@author) %> |
+<h3>Books</h3>
+
+<table class="table">
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Price</th>
+		</tr>
+	</thead>
+	<tbody>
+		<% @author.books.each do |book| %>
+			<tr>
+				<td><%= link_to book.title, [book.category, book] %></td>
+				<td>$<%= book.price %></td>
+			</tr>
+		<% end %>
+	</tbody>
+</table>
+
 <%= link_to 'Back', authors_path %>
