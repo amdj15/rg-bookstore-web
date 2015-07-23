@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150716234510) do
+ActiveRecord::Schema.define(version: 20150721234352) do
 
   create_table "addresses", force: :cascade do |t|
     t.string   "address",    limit: 255
@@ -40,6 +40,7 @@ ActiveRecord::Schema.define(version: 20150716234510) do
     t.float    "price",          limit: 24
     t.integer  "author_id",      limit: 4
     t.integer  "category_id",    limit: 4
+    t.string   "picture",        limit: 255
   end
 
   add_index "books", ["author_id"], name: "index_books_on_author_id", using: :btree
@@ -135,6 +136,18 @@ ActiveRecord::Schema.define(version: 20150716234510) do
   add_index "ratings", ["customer_id"], name: "index_ratings_on_customer_id", using: :btree
   add_index "ratings", ["item_type", "item_id"], name: "index_ratings_on_item_type_and_item_id", using: :btree
 
+  create_table "social_accounts", force: :cascade do |t|
+    t.integer  "customer_id", limit: 4
+    t.string   "social",      limit: 255
+    t.integer  "social_id",   limit: 8
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
+
+  add_index "social_accounts", ["customer_id"], name: "index_social_accounts_on_customer_id", using: :btree
+  add_index "social_accounts", ["social"], name: "index_social_accounts_on_social", using: :btree
+  add_index "social_accounts", ["social_id"], name: "index_social_accounts_on_social_id", using: :btree
+
   add_foreign_key "books", "authors"
   add_foreign_key "books", "categories"
   add_foreign_key "credit_cards", "customers"
@@ -143,4 +156,5 @@ ActiveRecord::Schema.define(version: 20150716234510) do
   add_foreign_key "orders", "credit_cards"
   add_foreign_key "orders", "customers"
   add_foreign_key "ratings", "customers"
+  add_foreign_key "social_accounts", "customers"
 end

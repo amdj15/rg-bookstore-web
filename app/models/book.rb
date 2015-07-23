@@ -7,4 +7,6 @@ class Book < ActiveRecord::Base
 
   validates :title, :price, :books_in_stock, :author, :category, presence: true
   validates :books_in_stock, numericality: {greater_than_or_equal_to: 0}
+
+  mount_uploader :picture, PictureUploader
 end

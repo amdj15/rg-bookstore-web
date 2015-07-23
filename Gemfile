@@ -28,6 +28,10 @@ gem 'bootstrap-sass'
 
 gem 'devise'
 gem 'rails_admin'
+gem 'carrierwave'
+gem 'mini_magick'
+gem 'cancancan'
+gem 'omniauth-facebook'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

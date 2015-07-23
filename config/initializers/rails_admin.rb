@@ -16,6 +16,8 @@ RailsAdmin.config do |config|
 
   ### More at https://github.com/sferik/rails_admin/wiki/Base-configuration
 
+  config.included_models = ["Author", "Book", "Category", "Orders"]
+
   config.authorize_with do
     redirect_to main_app.root_path unless current_customer && current_customer.is_admin?
   end
