@@ -32,24 +32,24 @@
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
             <li class="<%= active(categories_path) %>">
-              <a href="<%= categories_path %>">Categories</a>
+              <a href="<%= categories_path %>"><%= t(:categories).capitalize %></a>
             </li>
             <li class="<%= active(authors_path) %>">
-              <a href="<%= authors_path %>">Authors</a>
+              <a href="<%= authors_path %>"><%= t(:authors).capitalize %></a>
             </li>
           </ul>
 
           <ul class="nav navbar-nav navbar-right">
             <% if customer_signed_in? %>
               <li>
-                <%= link_to 'Sign Out', destroy_customer_session_path, :method => :delete %>
+                <%= link_to t('auth.sign_out').titleize, destroy_customer_session_path, :method => :delete %>
               </li>
             <% else %>
               <li>
-                <%= link_to 'Sign In', new_customer_session_path %>
+                <%= link_to t('auth.sign_in').titleize, new_customer_session_path %>
               </li>
               <li>
-                <%= link_to 'Sign Up', new_customer_registration_path %>
+                <%= link_to t('auth.sign_up').titleize, new_customer_registration_path %>
               </li>
             <% end %>
           </ul>

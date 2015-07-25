@@ -1,23 +1,36 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Title:</strong>
+  <strong><%= t(:title).capitalize %>:</strong>
   <%= @book.title %>
 </p>
 
 <p>
-  <strong>Description:</strong>
+  <strong><%= t(:description).capitalize %>:</strong>
   <%= @book.description %>
 </p>
 
 <p>
-  <strong>Books in stock:</strong>
+  <strong><%= t(:books_in_stock).capitalize %>:</strong>
   <%= @book.books_in_stock %>
 </p>
 
-<p>
-	<strong>Author</strong>
-	<%= link_to (@book.author.firstname + ' ' + @book.author.lastname), @book.author %>
-</p>
+<div>
+	<h3><%= t(:authors).capitalize %></h3>
+	<ul>
+		<% @book.authors.each do |author| %>
+			<li><%= link_to (author.firstname + ' ' + author.lastname), author %></li>
+		<% end %>
+	</ul>
+</div>
 
-<%= link_to 'Back', @book.category %>
+<div>
+	<h3><%= t(:categories).capitalize %></h3>
+	<ul>
+		<% @book.categories.each do |category| %>
+			<li><%= link_to category.title, category %></li>
+		<% end %>
+	</ul>
+</div>
+
+<%= link_to t(:back).capitalize, @category %>

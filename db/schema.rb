@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150721234352) do
+ActiveRecord::Schema.define(version: 20150725124209) do
 
   create_table "addresses", force: :cascade do |t|
     t.string   "address",    limit: 255
@@ -31,20 +31,32 @@ ActiveRecord::Schema.define(version: 20150721234352) do
     t.datetime "updated_at",               null: false
   end
 
+  create_table "authors_books", force: :cascade do |t|
+    t.integer "author_id", limit: 4
+    t.integer "book_id",   limit: 4
+  end
+
+  add_index "authors_books", ["author_id"], name: "index_authors_books_on_author_id", using: :btree
+  add_index "authors_books", ["book_id"], name: "index_authors_books_on_book_id", using: :btree
+
   create_table "books", force: :cascade do |t|
     t.string   "title",          limit: 255
     t.text     "description",    limit: 65535
+    t.string   "short_descr",    limit: 255
     t.integer  "books_in_stock", limit: 4
     t.datetime "created_at",                   null: false
     t.datetime "updated_at",                   null: false
     t.float    "price",          limit: 24
-    t.integer  "author_id",      limit: 4
-    t.integer  "category_id",    limit: 4
     t.string   "picture",        limit: 255
   end
 
-  add_index "books", ["author_id"], name: "index_books_on_author_id", using: :btree
-  add_index "books", ["category_id"], name: "index_books_on_category_id", using: :btree
+  create_table "books_categories", force: :cascade do |t|
+    t.integer "category_id", limit: 4
+    t.integer "book_id",     limit: 4
+  end
+
+  add_index "books_categories", ["book_id"], name: "index_books_categories_on_book_id", using: :btree
+  add_index "books_categories", ["category_id"], name: "index_books_categories_on_category_id", using: :btree
 
   create_table "categories", force: :cascade do |t|
     t.string   "title",      limit: 255
@@ -148,8 +160,10 @@ ActiveRecord::Schema.define(version: 20150721234352) do
   add_index "social_accounts", ["social"], name: "index_social_accounts_on_social", using: :btree
   add_index "social_accounts", ["social_id"], name: "index_social_accounts_on_social_id", using: :btree
 
-  add_foreign_key "books", "authors"
-  add_foreign_key "books", "categories"
+  add_foreign_key "authors_books", "authors"
+  add_foreign_key "authors_books", "books"
+  add_foreign_key "books_categories", "books"
+  add_foreign_key "books_categories", "categories"
   add_foreign_key "credit_cards", "customers"
   add_foreign_key "order_items", "books"
   add_foreign_key "order_items", "orders"

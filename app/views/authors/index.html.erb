@@ -1,13 +1,13 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Listing Authors</h1>
+<h1><%= t(:authors_list).capitalize %></h1>
 
 <table class="table">
   <thead>
     <tr>
-      <th>Firstname</th>
-      <th>Lastname</th>
-      <th>Biography</th>
+      <th><%= t(:name).capitalize %></th>
+      <th><%= t(:last_name).capitalize %></th>
+      <th><%= t(:biography).capitalize %></th>
       <th colspan="1"></th>
     </tr>
   </thead>
@@ -18,7 +18,7 @@
         <td><%= author.firstname %></td>
         <td><%= author.lastname %></td>
         <td><%= author.biography %></td>
-        <td><%= link_to 'Show', author %></td>
+        <td><%= link_to t(:show).capitalize, author %></td>
       </tr>
     <% end %>
   </tbody>

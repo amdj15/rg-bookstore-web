@@ -1,37 +1,37 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Firstname:</strong>
+  <strong><%= t(:name).capitalize %>:</strong>
   <%= @author.firstname %>
 </p>
 
 <p>
-  <strong>Lastname:</strong>
+  <strong><%= t(:last_name).capitalize %>:</strong>
   <%= @author.lastname %>
 </p>
 
 <p>
-  <strong>Biography:</strong>
+  <strong><%= t(:biography).capitalize %>:</strong>
   <%= @author.biography %>
 </p>
 
-<h3>Books</h3>
+<h3><%= t(:books).capitalize %></h3>
 
 <table class="table">
 	<thead>
 		<tr>
-			<th>Name</th>
-			<th>Price</th>
+			<th><%= t(:name).capitalize %></th>
+			<th><%= t(:price).capitalize %></th>
 		</tr>
 	</thead>
 	<tbody>
 		<% @author.books.each do |book| %>
 			<tr>
-				<td><%= link_to book.title, [book.category, book] %></td>
+				<td><%= link_to book.title, [book.categories[0], book] %></td>
 				<td>$<%= book.price %></td>
 			</tr>
 		<% end %>
 	</tbody>
 </table>
 
-<%= link_to 'Back', authors_path %>
+<%= link_to t(:back).capitalize, authors_path %>

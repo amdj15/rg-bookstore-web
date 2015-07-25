@@ -1,16 +1,16 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Title:</strong>
+  <strong><%= t(:title).capitalize %>:</strong>
   <%= @category.title %>
 </p>
 
 <table class="table">
   <thead>
     <tr>
-      <th>Title</th>
-      <th>Description</th>
-      <th>Books in stock</th>
+      <th><%= t(:title).capitalize %></th>
+      <th><%= t(:description).capitalize %></th>
+      <th><%= t(:books_in_stock).capitalize %></th>
     </tr>
   </thead>
 
@@ -25,4 +25,4 @@
   </tbody>
 </table>
 
-<%= link_to 'Back', categories_path %>
+<%= link_to t(:back).capitalize, categories_path %>

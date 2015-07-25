@@ -21,3 +21,26 @@
 
 en:
   hello: "Hello world"
+  categories: "categories"
+  authors: "authors"
+
+  auth:
+    sign_in: "sign in"
+    sign_out: "sign out"
+    sign_up: "sign up"
+
+  title: "title"
+  description: "description"
+  books_in_stock: "books in stock"
+  name: "name"
+  last_name: "last name"
+  biography: "biography"
+  price: "price"
+  books: "books"
+  back: "back"
+  categories_list: "categories list"
+  authors_list: "authors list"
+  books_list: "books list"
+  show: "show"
+  category: "category"
+

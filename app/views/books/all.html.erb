@@ -1,22 +1,22 @@
-<h1>Listing Books</h1>
+<h1><%= t(:books_list).capitalize %></h1>
 
 <table class="table">
   <thead>
     <tr>
-      <th>Title</th>
-      <th>Description</th>
-      <th>Books in stock</th>
-      <th>Category</th>
+      <th><%= t(:title).capitalize %></th>
+      <th><%= t(:description).capitalize %></th>
+      <th><%= t(:books_in_stock).capitalize %></th>
+      <th><%= t(:category).capitalize %></th>
     </tr>
   </thead>
 
   <tbody>
     <% @books.each do |book| %>
       <tr>
-        <td><%= link_to book.title, [book.category, book] %></td>
+        <td><%= link_to book.title, [book.categories[0], book] %></td>
         <td><%= book.description %></td>
         <td><%= book.books_in_stock %></td>
-        <td><%= link_to book.category.title, book.category %></td>
+        <td><%= link_to book.categories[0].title, book.categories[0] %></td>
       </tr>
     <% end %>
   </tbody>
