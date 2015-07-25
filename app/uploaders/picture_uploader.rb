@@ -4,7 +4,7 @@ class PictureUploader < CarrierWave::Uploader::Base
 
   # Include RMagick or MiniMagick support:
   # include CarrierWave::RMagick
-  # include CarrierWave::MiniMagick
+  include CarrierWave::MiniMagick
 
   # Choose what kind of storage to use for this uploader:
   storage :file
@@ -25,16 +25,20 @@ class PictureUploader < CarrierWave::Uploader::Base
   # end
 
   # Process files as they are uploaded:
-  # process :scale => [200, 300]
-  #
-  # def scale(width, height)
-  #   # do something
-  # end
+  process :scale => [800, 1000]
 
   # Create different versions of your uploaded files:
-  # version :thumb do
-  #   process :resize_to_fit => [50, 50]
-  # end
+  version :thumb_min do
+    process :resize_to_fit => [100, 300]
+  end
+
+  version :thumb_middle do
+    process :resize_to_fit => [250, 400]
+  end
+
+  version :thumb_large do
+    process :resize_to_fit => [400, 600]
+  end
 
   # Add a white list of extensions which are allowed to be uploaded.
   # For images you might use something like this:
@@ -44,8 +48,23 @@ class PictureUploader < CarrierWave::Uploader::Base
 
   # Override the filename of the uploaded files:
   # Avoid using model.id or version_name here, see uploader/store.rb for details.
-  # def filename
-  #   "something.jpg" if original_filename
-  # end
+  def filename
+    "#{secure_token}.#{file.extension}"
+  end
 
+  protected
+    def secure_token
+      var = :"@#{mounted_as}_secure_token"
+      model.instance_variable_get(var) or model.instance_variable_set(var, SecureRandom.uuid)
+    end
+
+  private
+    def scale(width, height)
+      manipulate! do |img|
+        img.combine_options do |c|
+          c.resize      "#{width}x#{height}"
+        end
+        img
+      end
+    end
 end
