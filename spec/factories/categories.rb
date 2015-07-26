@@ -1,6 +1,7 @@
 FactoryGirl.define do
   factory :category do
-    title { Faker::Lorem.word }
+    sequence(:title) { |n| Faker::Lorem.word + " #{n}" }
+
 
     factory :category_with_books do
       transient do
@@ -8,7 +9,7 @@ FactoryGirl.define do
       end
 
       after(:create) do |category, evaluator|
-        create_list(:book, evaluator.books_count, category: category)
+        category.books = create_list(:book, evaluator.books_count)
       end
     end
   end

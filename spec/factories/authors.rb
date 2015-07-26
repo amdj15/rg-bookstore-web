@@ -10,7 +10,7 @@ FactoryGirl.define do
       end
 
       after(:create) do |author, evaluator|
-        create_list(:book, evaluator.books_count, author: author)
+        author.books = create_list(:book, evaluator.books_count)
       end
     end
   end

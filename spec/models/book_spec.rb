@@ -5,8 +5,9 @@ RSpec.describe Book, type: :model do
 
   it { expect(book).to have_many :order_items }
   it { expect(book).to have_many :ratings }
-  it { expect(book).to belong_to :author }
-  it { expect(book).to belong_to :category }
+
+  it { expect(book).to have_and_belong_to_many :authors }
+  it { expect(book).to have_and_belong_to_many :categories }
 
   it { expect(book).to validate_presence_of :title }
   it { expect(book).to validate_presence_of :price }
