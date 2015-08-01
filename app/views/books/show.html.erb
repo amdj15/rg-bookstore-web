@@ -35,4 +35,24 @@
 	</ul>
 </div>
 
+<div class="reviews">
+	<h3><%= t(:reviews).capitalize %></h3>
+
+	<% if can? :review, @book %>
+		<%= link_to t(:add_review_for_this_book).capitalize, review_category_book_path(@category, @book) %>
+	<% end %>
+
+	<ul>
+		<% @book.ratings.accessible_by(current_ability).each do |item| %>
+			<li>
+				<%= item.review %>
+
+				<% if can? :destroy, item %>
+					<%= link_to t(:delete), destroy_review_path(@category, @book, item), data: { confirm: "Are you sure?" }, method: :delete %>
+				<% end %>
+			</li>
+		<% end %>
+	</ul>
+</div>
+
 <%= link_to t(:back).capitalize, @category %>

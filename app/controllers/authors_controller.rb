@@ -1,5 +1,6 @@
 class AuthorsController < ApplicationController
   before_action :set_author, only: [:show]
+  authorize_resource
 
   # GET /authors
   # GET /authors.json
