@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :social_account do
-    customer nil
-    social "MyString"
-    social_id 1
+    customer
+    social "facebook"
+    social_id Faker::Number.number(15)
   end
 end

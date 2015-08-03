@@ -54,5 +54,23 @@ RSpec.describe BooksController, type: :controller do
         expect(assigns(:review)).to be_a_new Rating
       end
     end
+
+    describe "POST #create_review" do
+      def create_review
+        post :create_review, id: book.id, category_id: category.id, rating: FactoryGirl.attributes_for(:rating)
+      end
+
+      it "creates a new Rating" do
+        expect{
+          create_review
+        }.to change(Rating, :count).by(1)
+      end
+
+      it "redirect to book" do
+        create_review
+
+        expect(response).to redirect_to category_book_path(category, book)
+      end
+    end
   end
 end

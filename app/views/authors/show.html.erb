@@ -25,7 +25,7 @@
 		</tr>
 	</thead>
 	<tbody>
-		<% @author.books.each do |book| %>
+		<% @author.books_list.each do |book| %>
 			<tr>
 				<td><%= link_to book.title, [book.categories[0], book] %></td>
 				<td>$<%= book.price %></td>

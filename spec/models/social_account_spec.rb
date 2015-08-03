@@ -1,5 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe SocialAccount, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  let(:social_account) { FactoryGirl::create :social_account }
+
+  it { expect(social_account).to belong_to :customer }
 end
