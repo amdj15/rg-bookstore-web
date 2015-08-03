@@ -1,10 +1,4 @@
 Rails.application.routes.draw do
-  get 'omniauth_callbacks/facebook'
-
-  namespace :customer do
-    get 'omniauth_callbacks/facebook'
-  end
-
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   get 'orders' => 'orders#index'
 

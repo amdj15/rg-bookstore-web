@@ -6,7 +6,6 @@ RSpec.describe AuthorsController, type: :controller do
 
   describe "GET #show" do
     before do
-      # Author.stub(:find).and_return author
       allow(Author).to receive(:find).and_return author
     end
 
@@ -20,9 +19,26 @@ RSpec.describe AuthorsController, type: :controller do
       get :show, id: author.id
     end
 
-    # it "render show template" do
-    #   expect(response).to render_template(:show)
-    #   get :show, id: author.id
-    # end
+    it "render show template" do
+      get :show, id: author.id
+      expect(response).to render_template(:show)
+    end
+  end
+
+  describe "GET #index" do
+    it "render index template" do
+      get :index
+      expect(response).to render_template(:index)
+    end
+
+    it "returns http success" do
+      get :index
+      expect(response).to have_http_status(:success)
+    end
+
+    it "resive all and return authors list" do
+      expect(Author).to receive(:all).with(no_args)
+      get :index
+    end
   end
 end
