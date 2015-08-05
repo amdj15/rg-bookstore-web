@@ -1,0 +1,22 @@
+<h1><%= t(:cart).capitalize %> - $<%= @order.total_price %></h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th><%= t(:title).capitalize %></th>
+      <th><%= t(:quantity).capitalize %></th>
+      <th><%= t(:price).capitalize %></th>
+      <th><%= t(:total_price).capitalize %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @order_items.each do |item| %>
+      <tr>
+        <td><%= item.book.title %></td>
+        <td><%= item.quantity %></td>
+        <td><%= item.price %></td>
+        <td><%= item.price * item.quantity %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

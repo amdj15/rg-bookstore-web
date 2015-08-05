@@ -1,5 +1,3 @@
-<p id="notice"><%= notice %></p>
-
 <%= image_tag @book.picture_url(:thumb_middle) if @book.picture? %>
 
 <p>
@@ -34,6 +32,13 @@
 		<% end %>
 	</ul>
 </div>
+
+<%= form_tag order_items_add_path, method: "post" do %>
+	<%= text_field_tag 'item[quantity]', 1 %>
+	<%= hidden_field_tag 'item[book_id]', @book.id %>
+
+	<%= submit_tag t(:add_to_cart).capitalize %>
+<% end %>
 
 <div class="reviews">
 	<h3><%= t(:reviews).capitalize %></h3>

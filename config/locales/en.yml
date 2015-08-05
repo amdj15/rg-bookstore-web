@@ -54,3 +54,9 @@ en:
   create: "create"
   delete: "delete"
 
+  cart: "cart"
+  add_to_cart: "add to cart"
+  quantity: "quantity"
+  total_price: "total price"
+  item_has_been_added_to_cart: "item has been added to cart"
+

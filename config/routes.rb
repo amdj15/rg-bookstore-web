@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  post 'order_items/add'
+
+  get 'order_items/destroy'
+
+  get 'carts/show'
+
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   get 'orders' => 'orders#index'
 

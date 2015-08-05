@@ -27,15 +27,21 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="<%= root_path %>">Bookstore</a>
+
+          <%= link_to "Bookstore", root_path, class: "navbar-brand" %>
+
         </div>
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
             <li class="<%= active(categories_path) %>">
-              <a href="<%= categories_path %>"><%= t(:categories).capitalize %></a>
+              <%= link_to t(:categories).capitalize, categories_path %>
             </li>
             <li class="<%= active(authors_path) %>">
-              <a href="<%= authors_path %>"><%= t(:authors).capitalize %></a>
+              <%= link_to t(:authors).capitalize, authors_path %>
+            </li>
+
+            <li class="<%= active(carts_show_path) %>">
+              <%= link_to t(:cart).capitalize, carts_show_path %>
             </li>
           </ul>
 

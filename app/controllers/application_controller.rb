@@ -6,4 +6,16 @@ class ApplicationController < ActionController::Base
   def current_ability
     @current_ability ||= Ability.new(current_customer)
   end
+
+  def current_order
+    unless current_order?
+      Order.new
+    else
+      Order.find(session[:order_id])
+    end
+  end
+
+  def current_order?
+    !session[:order_id].nil? && Order.progress.exists?(id: session[:order_id])
+  end
 end
