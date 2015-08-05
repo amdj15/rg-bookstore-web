@@ -3,8 +3,7 @@ require 'rails_helper'
 RSpec.describe Order, type: :model do
   let(:order) { FactoryGirl::create :order }
 
-  it { expect(order).to validate_presence_of :total_price }
-  it { expect(order).to validate_inclusion_of(:state).in_array(Order.states.values) }
+  it { expect(order).to validate_inclusion_of(:state).in_array(Order::STATES.values) }
 
   context "default state" do
     it "should set default state" do

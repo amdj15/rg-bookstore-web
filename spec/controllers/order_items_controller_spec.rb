@@ -2,15 +2,15 @@ require 'rails_helper'
 
 RSpec.describe OrderItemsController, type: :controller do
 
-  describe "GET #add" do
-    it "returns http success" do
-      get :add
+  describe "POST #add" do
+    xit "returns http success" do
+      post :add
       expect(response).to have_http_status(:success)
     end
   end
 
-  describe "GET #destroy" do
-    it "returns http success" do
+  describe "DELETE #destroy" do
+    xit "returns http success" do
       get :destroy
       expect(response).to have_http_status(:success)
     end
