@@ -1,5 +1,3 @@
-== README
-
 [![Build Status](https://travis-ci.org/amdj15/rg-bookstore-web.svg?branch=master)](https://travis-ci.org/amdj15/rg-bookstore-web)
 
 
