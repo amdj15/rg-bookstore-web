@@ -1,28 +1,25 @@
 Rails.application.routes.draw do
-  post 'order_items/add'
-
-  get 'order_items/destroy'
-
-  get 'carts/show'
-
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
-  get 'orders' => 'orders#index'
 
   devise_for :customers, path: "auth", :controllers => { :omniauth_callbacks => "omniauth_callbacks" }
 
   resources :customers, only: [:create]
-  resources :authors, only: [:show, :index]
+
+  resources :authors, only: [:show, :index] do
+    resources :ratings, only: [:new, :create, :destroy]
+  end
 
   resources :categories, only: [:show, :index] do
     resources :books, only: [:show] do
-      member do
-        get "review"
-        post "create_review"
-      end
+      resources :ratings, only: [:new, :create, :destroy]
     end
   end
 
-  delete 'categories/:category_id/books/:book_id/review/:id' => 'ratings#destroy', as: 'destroy_review'
+  resources :carts, only: [:index], as: "cart", path: "cart"
+
+  resources :order_items, only: [:destroy] do
+    post "add", on: :collection
+  end
 
   root "books#all"
 end

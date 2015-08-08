@@ -1,6 +1,6 @@
-<h1><%= t(:new_review_for).capitalize %>: <%= link_to @book.title, [@category, @book] %></h1>
+<h1><%= t(:new_review).capitalize %></h1>
 
-<%= form_tag create_review_category_book_path, method: "post" do %>
+<%= form_tag @new_rating_path.call, method: "post" do %>
 	<%= select_tag 'rating[rating]', options_for_select(Rating::RATING_RANGE.map{ |item| [item, item] }) %>
 	<%= text_area_tag 'rating[review]', nil, placeholder: t(:review).capitalize %>
 	<%= submit_tag t(:create).capitalize %>

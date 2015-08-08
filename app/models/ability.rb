@@ -10,12 +10,8 @@ class Ability
     can :read, Rating, approved: true
 
     if customer
-      can :review, Book
-      can :create_review, Book
-
-      can :destroy, Rating do |rating|
-        rating.customer == customer
-      end
+      can [:create, :new], Rating
+      can :destroy, Rating, customer_id: customer.id
     end
   end
 end

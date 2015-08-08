@@ -33,7 +33,7 @@
 	</ul>
 </div>
 
-<%= form_tag order_items_add_path, method: "post" do %>
+<%= form_tag add_order_items_path, method: "post" do %>
 	<%= text_field_tag 'item[quantity]', 1 %>
 	<%= hidden_field_tag 'item[book_id]', @book.id %>
 
@@ -43,8 +43,8 @@
 <div class="reviews">
 	<h3><%= t(:reviews).capitalize %></h3>
 
-	<% if can? :review, @book %>
-		<%= link_to t(:add_review_for_this_book).capitalize, review_category_book_path(@category, @book) %>
+	<% if can? :new, Rating %>
+		<%= link_to t(:add_review_for_this_book).capitalize, new_category_book_rating_path(@category, @book) %>
 	<% end %>
 
 	<ul>
@@ -53,7 +53,7 @@
 				<%= item.review %>
 
 				<% if can? :destroy, item %>
-					<%= link_to t(:delete), destroy_review_path(@category, @book, item), data: { confirm: "Are you sure?" }, method: :delete %>
+					<%= link_to t(:delete), category_book_rating_path(@category, @book, item), data: { confirm: "Are you sure?" }, method: :delete %>
 				<% end %>
 			</li>
 		<% end %>

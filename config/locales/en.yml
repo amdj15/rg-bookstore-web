@@ -45,7 +45,7 @@ en:
   category: "category"
 
   add_review_for_this_book: "add review for this book"
-  new_review_for: "new review for"
+  new_review: "new review"
   reviews: "reviews"
   review: "review"
   review_created: "review has been created"

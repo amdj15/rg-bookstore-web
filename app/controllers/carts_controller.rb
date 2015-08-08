@@ -1,5 +1,5 @@
 class CartsController < ApplicationController
-  def show
+  def index
     @order = current_order
     @order_items = @order.order_items.includes(:book)
   end
