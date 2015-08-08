@@ -257,6 +257,7 @@ DEPENDENCIES
   faker
   jbuilder (~> 2.0)
   jquery-rails
+  kaminari
   mini_magick
   mysql2
   omniauth-facebook
