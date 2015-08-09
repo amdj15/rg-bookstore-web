@@ -21,6 +21,9 @@ class ApplicationController < ActionController::Base
         Order.find(session[:order_id])
       end
 
+      @current_order.customer = current_customer
+      @current_order.save
+
       session[:order_id] = @current_order.id
     end
 end

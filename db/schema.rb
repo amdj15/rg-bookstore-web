@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150730230036) do
+ActiveRecord::Schema.define(version: 20150809162957) do
 
   create_table "addresses", force: :cascade do |t|
     t.string   "address",    limit: 255
@@ -128,6 +128,7 @@ ActiveRecord::Schema.define(version: 20150730230036) do
     t.date     "completed_date"
     t.integer  "customer_id",         limit: 4
     t.integer  "credit_card_id",      limit: 4
+    t.integer  "delivery_type",       limit: 4
   end
 
   add_index "orders", ["billing_address_id"], name: "index_orders_on_billing_address_id", using: :btree

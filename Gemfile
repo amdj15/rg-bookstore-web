@@ -29,6 +29,7 @@ gem 'mini_magick'
 gem 'cancancan'
 gem 'omniauth-facebook'
 gem 'kaminari'
+gem 'aasm'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

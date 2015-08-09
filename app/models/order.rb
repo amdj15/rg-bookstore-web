@@ -1,8 +1,36 @@
 class Order < ActiveRecord::Base
-  STATES = {
-    progress: 'in progress',
-    completed: 'completed',
-    shipped: 'shipped'
+  include AASM
+
+  aasm.attribute_name :state
+
+  aasm do
+    state :progress, initial: true
+    state :completed
+    state :shipped
+
+    event :complete do
+      transitions from: :progress, to: :completed
+    end
+  end
+
+  STEPS = [:address, :delivery, :payment, :confirm, :complete]
+
+  DELIVERY_TYPES =  {
+    ground: {
+      id: 1,
+      title: "UPS Ground",
+      price: "5"
+    },
+    two_day: {
+      id: 2,
+      title: "UPS Two Day",
+      price: "10"
+    },
+    one_day: {
+      id: 3,
+      title: "UPS One Day",
+      price: "15"
+    },
   }
 
   belongs_to :customer
@@ -10,14 +38,11 @@ class Order < ActiveRecord::Base
   belongs_to :billing_address, class_name: "Address"
   belongs_to :shipping_address, class_name: "Address"
 
-  scope :progress, ->{ where(state: STATES[:progress]) }
+  scope :progress, ->{ where(state: :progress) }
 
   has_many :order_items
 
-  # validates :total_price, :completed_date, presence: true
-  validates :state, presence: true, inclusion: { in: STATES.values }
-
-  before_validation :defaults_values
+  validates :state, presence: true
 
   def add_book(book, quantity = 1)
     item = order_items.where(book: book).first
@@ -31,10 +56,6 @@ class Order < ActiveRecord::Base
 
     self.total_price = calculate_total_price
     save
-  end
-
-  def defaults_values
-    self.state ||= STATES[:progress]
   end
 
   private
