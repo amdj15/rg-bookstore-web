@@ -1,2 +1,71 @@
-<h1>Orders#index</h1>
-<p>Find me in app/views/orders/index.html.erb</p>
+<h1><%= t(:orders).capitalize %></h1>
+
+<div class="row">
+	<h2><%= t(:in_progress).upcase %></h2>
+</div>
+
+<div class="row">
+	<h2><%= t(:waiting_for_progresss).upcase %></h2>
+	<table class="table">
+		<thead>
+			<tr>
+				<th><%= t(:order_number).upcase %></th>
+				<th><%= t(:completed_at).upcase %></th>
+				<th><%= t(:total).upcase %></th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td><%= t(:view) %></td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+
+<div class="row">
+	<h2><%= t(:in_delivery).upcase %></h2>
+	<table class="table">
+		<thead>
+			<tr>
+				<th><%= t(:order_number).upcase %></th>
+				<th><%= t(:completed_at).upcase %></th>
+				<th><%= t(:total).upcase %></th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td><%= t(:view) %></td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+
+<div class="row">
+	<h2><%= t(:delivered).upcase %></h2>
+	<table class="table">
+		<thead>
+			<tr>
+				<th><%= t(:order_number).upcase %></th>
+				<th><%= t(:completed_at).upcase %></th>
+				<th><%= t(:total).upcase %></th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td><%= t(:view) %></td>
+			</tr>
+		</tbody>
+	</table>
+</div>

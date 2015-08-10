@@ -17,17 +17,14 @@ class Order < ActiveRecord::Base
 
   DELIVERY_TYPES =  {
     ground: {
-      id: 1,
       title: "UPS Ground",
       price: "5"
     },
     two_day: {
-      id: 2,
       title: "UPS Two Day",
       price: "10"
     },
     one_day: {
-      id: 3,
       title: "UPS One Day",
       price: "15"
     },
@@ -43,6 +40,13 @@ class Order < ActiveRecord::Base
   has_many :order_items
 
   validates :state, presence: true
+  validates :delivery_type, presence: true, allow_blank: false
+
+  after_initialize :defaults
+
+  def defaults
+    self.delivery_type = :ground
+  end
 
   def add_book(book, quantity = 1)
     item = order_items.where(book: book).first

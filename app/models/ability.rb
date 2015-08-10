@@ -12,6 +12,8 @@ class Ability
     if customer
       can [:create, :new], Rating
       can :destroy, Rating, customer_id: customer.id
+
+      can :manage, Order, customer_id: customer.id
     end
   end
 end

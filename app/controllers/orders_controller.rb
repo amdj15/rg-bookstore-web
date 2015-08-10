@@ -1,7 +1,9 @@
 class OrdersController < ApplicationController
-  before_filter :authenticate_customer!, :set_meta_data
+  before_filter :authenticate_customer!
+  before_filter :set_meta_data, only: [:checkout, :next_step]
 
   def index
+    @orders = Order.accessible_by(current_ability)
   end
 
   def checkout
@@ -14,10 +16,10 @@ class OrdersController < ApplicationController
       @current_order.customer.update_attributes(customer_params)
 
       @errors = @current_order.billing_address.errors.full_messages.concat(@current_order.customer.errors.full_messages)
-
     when Order::STEPS[1]
-      @current_order.delivery_type = params[:delivery_type]
+      @current_order.update_attributes(delivery_type: params[:delivery_type])
 
+      @errors = @current_order.errors
     when Order::STEPS[2]
       @credit_card.update_attributes(credit_card_params)
 
@@ -26,6 +28,9 @@ class OrdersController < ApplicationController
       else
         @errors = @credit_card.errors.full_messages
       end
+    when Order::STEPS[3]
+      @current_order.complete!
+      flash[:completed_order_id] = @current_order.id
     end
 
     if @errors.any?
@@ -38,6 +43,10 @@ class OrdersController < ApplicationController
 
   private
     def set_meta_data
+      if flash[:completed_order_id]
+        @current_order = Order.find(flash[:completed_order_id])
+      end
+
       @current_order.billing_address ||= Address.new
       @current_order.shipping_address ||= Address.new
 

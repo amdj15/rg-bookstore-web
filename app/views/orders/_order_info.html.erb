@@ -1,0 +1,22 @@
+<div class="row">
+	<div class="col-md-4">
+		<h5><%= t(:shipping_address).capitalize %></h5>
+		<ul>
+			<li><%= @current_order.customer.firstname %> <%= @current_order.customer.lastname %></li>
+			<li><%= @current_order.billing_address.address %></li>
+			<li><%= @current_order.billing_address.city %> <%= @current_order.billing_address.city %></li>
+			<li><%= @current_order.billing_address.country.try(:name) %></li>
+			<li><%= t(:phone).capitalize %> <%= @current_order.billing_address.phone %></li>
+		</ul>
+	</div>
+	<div class="col-md-4">
+		<h5><%= t(:shipments).capitalize %></h5>
+		<ul>
+		</ul>
+	</div>
+	<div class="col-md-4">
+		<h5><%= t(:payment_information).capitalize %></h5>
+		<ul>
+		</ul>
+	</div>
+</div>

@@ -43,6 +43,12 @@
             <li class="<%= active(cart_index_path) %>">
               <%= link_to t(:cart).capitalize, cart_index_path %>
             </li>
+
+            <% if can? :read, Order %>
+              <li class="<%= active(orders_path) %>">
+                <%= link_to t(:orders).capitalize, orders_path %>
+              </li>
+            <% end %>
           </ul>
 
           <ul class="nav navbar-nav navbar-right">

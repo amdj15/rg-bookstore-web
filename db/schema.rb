@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150809162957) do
+ActiveRecord::Schema.define(version: 20150810142446) do
 
   create_table "addresses", force: :cascade do |t|
     t.string   "address",    limit: 255
@@ -128,12 +128,13 @@ ActiveRecord::Schema.define(version: 20150809162957) do
     t.date     "completed_date"
     t.integer  "customer_id",         limit: 4
     t.integer  "credit_card_id",      limit: 4
-    t.integer  "delivery_type",       limit: 4
+    t.string   "delivery_type",       limit: 255
   end
 
   add_index "orders", ["billing_address_id"], name: "index_orders_on_billing_address_id", using: :btree
   add_index "orders", ["credit_card_id"], name: "index_orders_on_credit_card_id", using: :btree
   add_index "orders", ["customer_id"], name: "index_orders_on_customer_id", using: :btree
+  add_index "orders", ["delivery_type"], name: "index_orders_on_delivery_type", using: :btree
   add_index "orders", ["shipping_address_id"], name: "index_orders_on_shipping_address_id", using: :btree
 
   create_table "ratings", force: :cascade do |t|

@@ -1,8 +1,8 @@
 <%= form_tag next_step_orders_path, method: "post" do %>
-	<% Order::DELIVERY_TYPES.values.each do |item| %>
+	<% Order::DELIVERY_TYPES.each do |item| %>
 		<div class="form-group">
-			<%= label_tag item[:title].to_s + ' +$' + item[:price].to_s %>
-			<%= radio_button_tag(:delivery_type, item[:id]) %>
+			<%= label_tag item[1][:title].to_s + ' +$' + item[1][:price].to_s %>
+			<%= radio_button_tag(:delivery_type, item[0]) %>
 		</div>
 	<% end %>
 
