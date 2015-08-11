@@ -1,11 +1,11 @@
 <h1><%= t(:orders).capitalize %></h1>
 
-<div class="row">
-	<h2><%= t(:in_progress).upcase %></h2>
+<!-- <div class="row">
+	<h5><%= t(:in_progress).upcase %></h5>
 </div>
-
+ -->
 <div class="row">
-	<h2><%= t(:waiting_for_progresss).upcase %></h2>
+	<h5><%= t(:waiting_for_progresss).upcase %></h5>
 	<table class="table">
 		<thead>
 			<tr>
@@ -16,18 +16,20 @@
 			</tr>
 		</thead>
 		<tbody>
+			<% @orders.completed.each do |order| %>
 			<tr>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td><%= t(:view) %></td>
+				<td><%= order.id %></td>
+				<td><%= order.updated_at %></td>
+				<td><%= order.total_price %></td>
+				<td><%= link_to t(:view), order_path(order) %></td>
 			</tr>
+			<% end %>
 		</tbody>
 	</table>
 </div>
 
 <div class="row">
-	<h2><%= t(:in_delivery).upcase %></h2>
+	<h5><%= t(:delivered).upcase %></h5>
 	<table class="table">
 		<thead>
 			<tr>
@@ -38,34 +40,14 @@
 			</tr>
 		</thead>
 		<tbody>
+			<% @orders.shipped.each do |order| %>
 			<tr>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td><%= t(:view) %></td>
+				<td><%= order.id %></td>
+				<td><%= order.updated_at %></td>
+				<td><%= order.total_price %></td>
+				<td><%= link_to t(:view), order_path(order) %></td>
 			</tr>
-		</tbody>
-	</table>
-</div>
-
-<div class="row">
-	<h2><%= t(:delivered).upcase %></h2>
-	<table class="table">
-		<thead>
-			<tr>
-				<th><%= t(:order_number).upcase %></th>
-				<th><%= t(:completed_at).upcase %></th>
-				<th><%= t(:total).upcase %></th>
-				<th></th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td><%= t(:view) %></td>
-			</tr>
+			<% end %>
 		</tbody>
 	</table>
 </div>

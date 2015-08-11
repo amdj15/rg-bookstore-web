@@ -1,0 +1,22 @@
+<table>
+  <thead>
+    <tr>
+      <th></th>
+      <th><%= t(:book).upcase %></th>
+      <th><%= t(:price).upcase %></th>
+      <th><%= t(:quantity).upcase %></th>
+      <th><%= t(:total).upcase %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @order.order_items.each do |item| %>
+    <tr>
+      <td><%= image_tag item.book.picture_url(:thumb_min) if item.book.picture? %></td>
+      <td><%= link_to item.book.title, category_book_path(item.book.categories[0], item.book) %></td>
+      <td><%= item.quantity %></td>
+      <td><%= item.price %></td>
+      <td><%= item.price * item.quantity %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -3,11 +3,13 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
     <title>Bookstore</title>
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <%= csrf_meta_tags %>
+
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -17,59 +19,68 @@
     <![endif]-->
   </head>
   <body>
-    <!-- Fixed navbar -->
-    <nav class="navbar navbar-default navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
+    <nav>
+      <div class="nav-wrapper" style="overflow: hidden;">
 
-          <%= link_to "Bookstore", root_path, class: "navbar-brand" %>
+        <ul id="slide-out" class="side-nav">
+          <li>
+            <%= link_to t(:home).capitalize, root_path %>
+          </li>
+          <li>
+            <%= link_to t(:categories).capitalize, categories_path %>
+          </li>
+          <li>
+            <%= link_to t(:authors).capitalize, authors_path %>
+          </li>
 
-        </div>
-        <div id="navbar" class="collapse navbar-collapse">
-          <ul class="nav navbar-nav">
-            <li class="<%= active(categories_path) %>">
-              <%= link_to t(:categories).capitalize, categories_path %>
+          <li>
+            <%= link_to t(:cart).capitalize, cart_index_path %>
+          </li>
+
+          <% if can? :read, Order %>
+            <li>
+              <%= link_to t(:orders).capitalize, orders_path %>
             </li>
-            <li class="<%= active(authors_path) %>">
-              <%= link_to t(:authors).capitalize, authors_path %>
+          <% end %>
+        </ul>
+
+        <ul class="right">
+          <li>
+            <form>
+              <div class="input-field">
+                <input id="search" type="search" required>
+                <label for="search"><i class="material-icons">search</i></label>
+              </div>
+            </form>
+          </li>
+
+          <% if customer_signed_in? %>
+            <li>
+              <%= link_to t('auth.sign_out').titleize, destroy_customer_session_path, :method => :delete %>
             </li>
-
-            <li class="<%= active(cart_index_path) %>">
-              <%= link_to t(:cart).capitalize, cart_index_path %>
+          <% else %>
+            <li>
+              <%= link_to t('auth.sign_in').titleize, new_customer_session_path %>
             </li>
+            <li>
+              <%= link_to t('auth.sign_up').titleize, new_customer_registration_path %>
+            </li>
+          <% end %>
+        </ul>
 
-            <% if can? :read, Order %>
-              <li class="<%= active(orders_path) %>">
-                <%= link_to t(:orders).capitalize, orders_path %>
-              </li>
-            <% end %>
-          </ul>
+        <ul class="left">
+          <li>
+            <a href="<%= root_path %>">The Bookstore</a>
+          </li>
+        </ul>
 
-          <ul class="nav navbar-nav navbar-right">
-            <% if customer_signed_in? %>
-              <li>
-                <%= link_to t('auth.sign_out').titleize, destroy_customer_session_path, :method => :delete %>
-              </li>
-            <% else %>
-              <li>
-                <%= link_to t('auth.sign_in').titleize, new_customer_session_path %>
-              </li>
-              <li>
-                <%= link_to t('auth.sign_up').titleize, new_customer_registration_path %>
-              </li>
-            <% end %>
-          </ul>
-        </div>
+        <a href="#" data-activates="slide-out" class="button-collapse show-on-large">
+          <i class="mdi-navigation-menu"></i>
+        </a>
       </div>
     </nav>
 
-    <div class="content container">
+    <div class="container">
       <p class="notice"><%= notice %></p>
       <p class="alert"><%= alert %></p>
 

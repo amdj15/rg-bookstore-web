@@ -1,10 +1,11 @@
 class RatingsController < ApplicationController
   before_filter :detect_owner
-  before_filter :pathes, only: [:new]
+  before_filter :pathes, only: [:new, :create]
 
   load_and_authorize_resource only: [:new, :destroy]
 
   def new
+    @rating = Rating.new
   end
 
   def create
@@ -19,7 +20,7 @@ class RatingsController < ApplicationController
         format.html { redirect_to :back, notice: t(:review_created).capitalize }
         format.json { render :show, status: :created }
       else
-        format.html { render :review }
+        format.html { render :new }
         format.json { render json: @owner.errors, status: :unprocessable_entity }
       end
     end

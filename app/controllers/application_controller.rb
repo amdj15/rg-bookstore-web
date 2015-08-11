@@ -25,7 +25,5 @@ class ApplicationController < ActionController::Base
       @current_order.save
 
       session[:order_id] = @current_order.id
-
-      p can? :read, Order
     end
 end

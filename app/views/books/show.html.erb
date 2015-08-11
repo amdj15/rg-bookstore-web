@@ -1,63 +1,76 @@
-<%= image_tag @book.picture_url(:thumb_middle) if @book.picture? %>
+<div class="row">
+  <div class="col s6">
+    <div class="card hoverable">
+      <div class="card-image waves-effect waves-block waves-light">
+        <%= image_tag @book.picture_url, class: "activator" if @book.picture? %>
+        <span class="card-title"><%= @book.title %></span>
+      </div>
 
-<p>
-  <strong><%= t(:title).capitalize %>:</strong>
-  <%= @book.title %>
-</p>
+      <div class="card-content">
+        <%= form_tag add_order_items_path, method: "post", class: "row" do %>
+          <div class="input-field col s12">
+            <%= label_tag t(:quantity).capitalize %>
+            <%= text_field_tag 'item[quantity]' %>
+            <%= hidden_field_tag 'item[book_id]', @book.id %>
+          </div>
 
-<p>
-  <strong><%= t(:description).capitalize %>:</strong>
-  <%= @book.description %>
-</p>
+          <button class="btn waves-effect waves-light" type="submit" name="action"><%= t(:add_to_cart).capitalize %>
+          </button>
+        <% end %>
+      </div>
 
-<p>
-  <strong><%= t(:books_in_stock).capitalize %>:</strong>
-  <%= @book.books_in_stock %>
-</p>
+      <div class="card-reveal">
+        <span class="card-title grey-text text-darken-4"><%= @book.title %><i class="material-icons right">close</i></span>
 
-<div>
-	<h3><%= t(:authors).capitalize %></h3>
-	<ul>
-		<% @book.authors.each do |author| %>
-			<li><%= link_to (author.firstname + ' ' + author.lastname), author %></li>
-		<% end %>
-	</ul>
+        <div class="section">
+          <h5><%= t(:authors).capitalize %></h5>
+          <div class="collection">
+            <% @book.authors.each do |author| %>
+              <%= link_to (author.firstname + ' ' + author.lastname), author, class: "collection-item" %>
+            <% end %>
+          </div>
+        </div>
+
+        <div class="section">
+          <h5><%= t(:categories).capitalize %></h5>
+          <div class="collection">
+            <% @book.categories.each do |category| %>
+              <%= link_to category.title, category, class: "collection-item" %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <%= simple_format(@book.description) %>
+
+  <div class="row">
+    <div class="col s12">
+      <h3>
+        <%= t(:reviews).capitalize %>
+
+        <% if can? :new, Rating %>
+          <a class="btn-floating btn-large waves-effect waves-light right" href="<%= new_category_book_rating_path(@category, @book) %>">
+            <i class="material-icons">add</i>
+          </a>
+        <% end %>
+      </h3>
+    </div>
+
+    <div class="col s12">
+      <% @book.ratings.accessible_by(current_ability).each do |item| %>
+        <div class="section">
+          <%= item.review %>
+
+          <% if can? :destroy, item %>
+            <a data-method="delete" data-confirm="<%= t(:are_you_sure).capitalize %>?" href="<%= category_book_rating_path(@category, @book, item) %>" class="right waves-effect">
+              <i class="material-icons">delete</i>
+            </a>
+          <% end %>
+        </div>
+        <div class="divider"></div>
+      <% end %>
+    </div>
+  </div>
 </div>
-
-<div>
-	<h3><%= t(:categories).capitalize %></h3>
-	<ul>
-		<% @book.categories.each do |category| %>
-			<li><%= link_to category.title, category %></li>
-		<% end %>
-	</ul>
-</div>
-
-<%= form_tag add_order_items_path, method: "post" do %>
-	<%= text_field_tag 'item[quantity]', 1 %>
-	<%= hidden_field_tag 'item[book_id]', @book.id %>
-
-	<%= submit_tag t(:add_to_cart).capitalize %>
-<% end %>
-
-<div class="reviews">
-	<h3><%= t(:reviews).capitalize %></h3>
-
-	<% if can? :new, Rating %>
-		<%= link_to t(:add_review_for_this_book).capitalize, new_category_book_rating_path(@category, @book) %>
-	<% end %>
-
-	<ul>
-		<% @book.ratings.accessible_by(current_ability).each do |item| %>
-			<li>
-				<%= item.review %>
-
-				<% if can? :destroy, item %>
-					<%= link_to t(:delete), category_book_rating_path(@category, @book, item), data: { confirm: "Are you sure?" }, method: :delete %>
-				<% end %>
-			</li>
-		<% end %>
-	</ul>
-</div>
-
-<%= link_to t(:back).capitalize, @category %>

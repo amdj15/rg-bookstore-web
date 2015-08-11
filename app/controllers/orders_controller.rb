@@ -6,6 +6,10 @@ class OrdersController < ApplicationController
     @orders = Order.accessible_by(current_ability)
   end
 
+  def show
+    @order = Order.accessible_by(current_ability).find(params[:id])
+  end
+
   def checkout
   end
 

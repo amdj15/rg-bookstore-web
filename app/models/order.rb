@@ -36,6 +36,8 @@ class Order < ActiveRecord::Base
   belongs_to :shipping_address, class_name: "Address"
 
   scope :progress, ->{ where(state: :progress) }
+  scope :completed, ->{ where(state: :completed) }
+  scope :shipped, ->{ where(state: :shipped) }
 
   has_many :order_items
 

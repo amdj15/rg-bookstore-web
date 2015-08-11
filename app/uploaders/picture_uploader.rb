@@ -25,7 +25,7 @@ class PictureUploader < CarrierWave::Uploader::Base
   # end
 
   # Process files as they are uploaded:
-  process :scale => [800, 1000]
+  process :scale => [900, 1200]
 
   # Create different versions of your uploaded files:
   version :thumb_min do

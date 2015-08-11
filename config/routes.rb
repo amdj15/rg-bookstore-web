@@ -21,7 +21,7 @@ Rails.application.routes.draw do
     post "add", on: :collection
   end
 
-  resources :orders, only: [:index] do
+  resources :orders, only: [:index, :show] do
     collection do
       get "checkout/:step" => "orders#checkout", as: "checkout"
       post "next_step"
