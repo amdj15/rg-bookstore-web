@@ -9,7 +9,7 @@
     </tr>
   </thead>
   <tbody>
-    <% @order.order_items.each do |item| %>
+    <% locals[:order].order_items.each do |item| %>
     <tr>
       <td><%= image_tag item.book.picture_url(:thumb_min) if item.book.picture? %></td>
       <td><%= link_to item.book.title, category_book_path(item.book.categories[0], item.book) %></td>
@@ -20,3 +20,20 @@
     <% end %>
   </tbody>
 </table>
+
+<div class="divider"></div>
+
+<div class="row">
+  <div class="col s4 right">
+    <span>subtotal $<%= locals[:order].total_price %></span>
+    <span>shipping $<%= Order::DELIVERY_TYPES[locals[:order].delivery_type.to_sym][:price] %></span>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<div class="row">
+  <div class="col s4 right">
+    <span>total $<%= Order::DELIVERY_TYPES[locals[:order].delivery_type.to_sym][:price].to_i + locals[:order].total_price.to_i %></span>
+  </div>
+</div>

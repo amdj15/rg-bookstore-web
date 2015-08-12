@@ -24,22 +24,22 @@
 
         <ul id="slide-out" class="side-nav">
           <li>
-            <%= link_to t(:home).capitalize, root_path %>
+            <%= link_to t(:home).capitalize, root_path, class: "waves-effect" %>
           </li>
           <li>
-            <%= link_to t(:categories).capitalize, categories_path %>
+            <%= link_to t(:categories).capitalize, categories_path, class: "waves-effect" %>
           </li>
           <li>
-            <%= link_to t(:authors).capitalize, authors_path %>
+            <%= link_to t(:authors).capitalize, authors_path, class: "waves-effect" %>
           </li>
 
           <li>
-            <%= link_to t(:cart).capitalize, cart_index_path %>
+            <%= link_to t(:cart).capitalize, cart_index_path, class: "waves-effect" %>
           </li>
 
           <% if can? :read, Order %>
             <li>
-              <%= link_to t(:orders).capitalize, orders_path %>
+              <%= link_to t(:orders).capitalize, orders_path, class: "waves-effect" %>
             </li>
           <% end %>
         </ul>
@@ -56,25 +56,25 @@
 
           <% if customer_signed_in? %>
             <li>
-              <%= link_to t('auth.sign_out').titleize, destroy_customer_session_path, :method => :delete %>
+              <%= link_to t('auth.sign_out').titleize, destroy_customer_session_path, :method => :delete, class: "waves-effect" %>
             </li>
           <% else %>
             <li>
-              <%= link_to t('auth.sign_in').titleize, new_customer_session_path %>
+              <%= link_to t('auth.sign_in').titleize, new_customer_session_path, class: "waves-effect" %>
             </li>
             <li>
-              <%= link_to t('auth.sign_up').titleize, new_customer_registration_path %>
+              <%= link_to t('auth.sign_up').titleize, new_customer_registration_path, class: "waves-effect" %>
             </li>
           <% end %>
         </ul>
 
         <ul class="left">
           <li>
-            <a href="<%= root_path %>">The Bookstore</a>
+            <a href="<%= root_path %>" class="waves-effect">The Bookstore</a>
           </li>
         </ul>
 
-        <a href="#" data-activates="slide-out" class="button-collapse show-on-large">
+        <a href="#" data-activates="slide-out" class="button-collapse show-on-large waves-effect">
           <i class="mdi-navigation-menu"></i>
         </a>
       </div>

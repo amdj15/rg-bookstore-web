@@ -1,24 +1,3 @@
-<h1><%= t(:cart).capitalize %> - $<%= @current_order.total_price %></h1>
+<h1><%= t(:cart).capitalize %> - $<%= @order.total_price %></h1>
 
-<table class="table">
-  <thead>
-    <tr>
-      <th><%= t(:title).capitalize %></th>
-      <th><%= t(:quantity).capitalize %></th>
-      <th><%= t(:price).capitalize %></th>
-      <th><%= t(:total_price).capitalize %></th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @order_items.each do |item| %>
-      <tr>
-        <td><%= link_to item.book.title, category_book_path(item.book.categories[0], item.book) %></td>
-        <td><%= item.quantity %></td>
-        <td><%= item.price %></td>
-        <td><%= item.price * item.quantity %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<%= link_to t(:checkout).capitalize, checkout_orders_path(Order::STEPS[0]) %>
+<%= render "orders/items", locals: {order: @order} %>
