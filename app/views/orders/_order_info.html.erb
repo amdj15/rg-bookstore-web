@@ -1,22 +1,42 @@
-<div class="row">
-	<div class="col-md-4">
-		<h5><%= t(:shipping_address).capitalize %></h5>
-		<ul>
+<div class="row order-info">
+	<div class="col s3">
+		<h6><%= t(:billing_address).capitalize %></h6>
+		<ul class="card-panel">
 			<li><%= @current_order.customer.firstname %> <%= @current_order.customer.lastname %></li>
 			<li><%= @current_order.billing_address.address %></li>
-			<li><%= @current_order.billing_address.city %> <%= @current_order.billing_address.city %></li>
+			<li><%= @current_order.billing_address.city %></li>
 			<li><%= @current_order.billing_address.country.try(:name) %></li>
 			<li><%= t(:phone).capitalize %> <%= @current_order.billing_address.phone %></li>
 		</ul>
 	</div>
-	<div class="col-md-4">
-		<h5><%= t(:shipments).capitalize %></h5>
-		<ul>
+
+	<div class="col s3">
+		<h6><%= t(:shipping_address).capitalize %></h6>
+		<ul class="card-panel">
+			<li><%= @current_order.customer.firstname %> <%= @current_order.customer.lastname %></li>
+			<li><%= @current_order.shipping_address.address %></li>
+			<li><%= @current_order.shipping_address.city %></li>
+			<li><%= @current_order.shipping_address.country.try(:name) %></li>
+			<li><%= t(:phone).capitalize %> <%= @current_order.billing_address.phone %></li>
 		</ul>
 	</div>
-	<div class="col-md-4">
-		<h5><%= t(:payment_information).capitalize %></h5>
-		<ul>
+
+	<% if @current_order.delivery_type %>
+	<div class="col s3">
+		<h6><%= t(:shipments).capitalize %></h6>
+		<ul class="card-panel">
+			<li>
+				<%= Order::DELIVERY_TYPES[@current_order.delivery_type.to_sym][:title] %> - $<%= Order::DELIVERY_TYPES[@current_order.delivery_type.to_sym][:price] %>
+			</li>
+		</ul>
+	</div>
+	<% end %>
+
+	<div class="col s3">
+		<h6><%= t(:payment_information).capitalize %></h6>
+		<ul class="card-panel">
+			<li><%= @current_customer.credit_card.number.gsub(/^[\d]{12}/, (1..12).map{'*'}.join) %></li>
+			<li><%= @current_customer.credit_card.month %>/<%= @current_customer.credit_card.year %></li>
 		</ul>
 	</div>
 </div>

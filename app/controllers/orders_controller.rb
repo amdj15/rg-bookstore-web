@@ -19,11 +19,18 @@ class OrdersController < ApplicationController
       @current_order.billing_address.update_attributes(address_params)
       @current_order.customer.update_attributes(customer_params)
 
-      @errors = @current_order.billing_address.errors.full_messages.concat(@current_order.customer.errors.full_messages)
-    when Order::STEPS[1]
-      @current_order.update_attributes(delivery_type: params[:delivery_type])
+      if params[:use_billing_address]
+        @current_order.shipping_address.update_attributes(address_params)
+      else
+        @current_order.shipping_address.update_attributes(address_params(:shipping_address))
+        @errors.concat(@current_order.shipping_address.errors.full_messages)
+      end
 
-      @errors = @current_order.errors
+      @errors.concat(@current_order.billing_address.errors.full_messages).concat(@current_order.customer.errors.full_messages)
+    when Order::STEPS[1]
+      @current_order.choose_delivery params[:delivery_type]
+
+      @errors << t(:choose_delivery_type).capitalize unless params[:delivery_type]
     when Order::STEPS[2]
       @credit_card.update_attributes(credit_card_params)
 
@@ -33,8 +40,12 @@ class OrdersController < ApplicationController
         @errors = @credit_card.errors.full_messages
       end
     when Order::STEPS[3]
-      @current_order.complete!
-      flash[:completed_order_id] = @current_order.id
+      begin
+        @current_order.complete!
+        flash[:completed_order_id] = @current_order.id
+      rescue AASM::InvalidTransition => e
+        @errors << t(:cannot_change_state).capitalize
+      end
     end
 
     if @errors.any?
@@ -46,6 +57,7 @@ class OrdersController < ApplicationController
   end
 
   private
+
     def set_meta_data
       if flash[:completed_order_id]
         @current_order = Order.find(flash[:completed_order_id])
@@ -75,11 +87,14 @@ class OrdersController < ApplicationController
       params.require(:customer).permit(:firstname, :lastname)
     end
 
-    def address_params
-      params.require(:address).permit(:address, :zip, :country_id, :phone, :city)
+    def address_params(type = :address)
+      params.require(type).permit(:address, :zip, :country_id, :phone, :city)
     end
 
     def credit_card_params
-      params.require(:card).permit(:firstname, :lastname, :CVV, :number, :month, :year)
+      credit_card = params.require(:card).permit(:firstname, :lastname, :CVV, :number, :month, :year)
+      credit_card[:number].gsub!(/\s+/, '')
+
+      credit_card
     end
 end

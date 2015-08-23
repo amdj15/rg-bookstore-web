@@ -6,4 +6,12 @@
 	</ul>
 <% end %>
 
+<ul class="chekout-steps">
+  <% Order::STEPS.select{ |s| s != :complete }.each do |item| %>
+    <li<%= " class=\"active\"".html_safe if item.to_s == @step.to_s %>>
+      <%= link_to t(item).capitalize, checkout_orders_path(item) %>
+    </li>
+  <% end %>
+</ul>
+
 <%= render @step %>

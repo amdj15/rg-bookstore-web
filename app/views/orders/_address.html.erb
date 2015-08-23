@@ -1,45 +1,92 @@
 <%= form_tag next_step_orders_path, method: "post" do %>
-	<div class="column">
-		<div class="form-group">
-			<%= label_tag t(:first_name).capitalize %>
-			<%= text_field_tag "customer[firstname]", @current_order.customer.firstname, class: "form-control" %>
-		</div>
+  <div class="row">
+    <div class="col s12">
+      <div class="input-field">
+        <%= label_tag t(:first_name).capitalize %>
+        <%= text_field_tag "customer[firstname]", @current_order.customer.firstname, class: "form-control" %>
+      </div>
 
-		<div class="form-group">
-			<%= label_tag t(:last_name).capitalize %>
-			<%= text_field_tag "customer[lastname]", @current_order.customer.lastname, class: "form-control" %>
-		</div>
+      <div class="input-field">
+        <%= label_tag t(:last_name).capitalize %>
+        <%= text_field_tag "customer[lastname]", @current_order.customer.lastname, class: "form-control" %>
+      </div>
+    </div>
+  </div>
 
-		<div class="form-group">
-			<%= label_tag t(:street_address).titleize %>
-			<%= text_field_tag "address[address]", @current_order.billing_address.address, class: "form-control" %>
-		</div>
+  <div class="row">
+    <div class="col s4">
+      <h5><%= t(:billing_address).capitalize %></h5>
 
-		<div class="form-group">
-			<%= label_tag t(:zip).upcase %>
-			<%= text_field_tag "address[zip]", @current_order.billing_address.zip, class: "form-control" %>
-		</div>
+      <div class="input-field">
+        <%= label_tag t(:street_address).titleize %>
+        <%= text_field_tag "address[address]", @current_order.billing_address.address, class: "form-control" %>
+      </div>
 
-		<div class="form-group">
-			<%= label_tag t(:phone).upcase %>
-			<%= text_field_tag "address[phone]", @current_order.billing_address.phone, class: "form-control" %>
-		</div>
+      <div class="input-field">
+        <%= label_tag t(:zip).upcase %>
+        <%= text_field_tag "address[zip]", @current_order.billing_address.zip, class: "form-control" %>
+      </div>
 
-		<div class="form-group">
-			<%= select_tag 'address[country_id]', options_for_select(@countries.map{ |item| [item.name, item.id] }, selected: @current_order.billing_address.country_id), class: "form-control" %>
-		</div>
+      <div class="input-field">
+        <%= label_tag t(:phone).upcase %>
+        <%= text_field_tag "address[phone]", @current_order.billing_address.phone, class: "form-control" %>
+      </div>
 
-		<div class="form-group">
-			<%= label_tag t(:city).upcase %>
-			<%= text_field_tag "address[city]", @current_order.billing_address.city, class: "form-control" %>
-		</div>
+      <div class="input-field">
+        <%= select_tag 'address[country_id]', options_for_select(@countries.map{ |item| [item.name, item.id] }, selected: @current_order.billing_address.country_id), class: "form-control" %>
+      </div>
 
-		<%= hidden_field_tag "step", Order::STEPS[0] %>
+      <div class="input-field">
+        <%= label_tag t(:city).upcase %>
+        <%= text_field_tag "address[city]", @current_order.billing_address.city, class: "form-control" %>
+      </div>
+    </div>
 
-		<%= submit_tag t(:next).capitalize, class: "btn btn-info" %>
-	</div>
+    <div class="col s4">
+      <h5><%= t(:shipping_address).capitalize %></h5>
 
-	<div class="column"></div>
+      <div id="shipping_address" class="<%= 'hidden' if @current_order.shipping_address.id == @current_order.billing_address.id %>">
+        <div class="input-field">
+          <%= label_tag t(:street_address).titleize %>
+          <%= text_field_tag "shipping_address[address]", @current_order.shipping_address.address, class: "form-control" %>
+        </div>
 
-	<div class="column"></div>
+        <div class="input-field">
+          <%= label_tag t(:zip).upcase %>
+          <%= text_field_tag "shipping_address[zip]", @current_order.shipping_address.zip, class: "form-control" %>
+        </div>
+
+        <div class="input-field">
+          <%= label_tag t(:phone).upcase %>
+          <%= text_field_tag "shipping_address[phone]", @current_order.shipping_address.phone, class: "form-control" %>
+        </div>
+
+        <div class="input-field">
+          <%= select_tag 'shipping_address[country_id]', options_for_select(@countries.map{ |item| [item.name, item.id] }, selected: @current_order.shipping_address.country_id), class: "form-control" %>
+        </div>
+
+        <div class="input-field">
+          <%= label_tag t(:city).upcase %>
+          <%= text_field_tag "shipping_address[city]", @current_order.shipping_address.city, class: "form-control" %>
+        </div>
+      </div>
+
+      <div class="switch">
+        <label for="use_billing_address"><%= t(:use_billing_address).capitalize %>:</label>
+        <label>
+          Off
+          <input name="use_billing_address" id="use_billing_address" <%= 'checked' if @current_order.shipping_address.id == @current_order.billing_address.id %> type="checkbox">
+          <span class="lever"></span>
+          On
+        </label>
+      </div>
+    </div>
+
+    <div class="col s4 center-align">
+      <%= render "order_summary" %>
+    </div>
+  </div>
+
+  <%= hidden_field_tag "step", Order::STEPS[0] %>
+  <%= submit_tag t(:next).capitalize, class: "btn btn-info" %>
 <% end %>

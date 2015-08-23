@@ -1,0 +1,20 @@
+<h5><%= t(:order_summary).capitalize %></h5>
+
+<ul class="card-panel">
+  <li>
+    <strong><%= t(:items_total).capitalize %>:</strong>
+    <span>$<%= @current_order.items_price %></span>
+  </li>
+
+  <% if @current_order.delivery_type %>
+  <li>
+    <strong><%= t(:shipping).capitalize %>:</strong>
+    <span>$<%= Order::DELIVERY_TYPES[@current_order.delivery_type.to_sym][:price] %></span>
+  </li>
+  <% end %>
+
+  <li>
+    <strong><%= t(:order_total).capitalize %>:</strong>
+    <span>$<%= @current_order.total_price %></span>
+  </li>
+</ul>

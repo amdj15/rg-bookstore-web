@@ -8,6 +8,7 @@
     <title>Bookstore</title>
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.1.2/css/material-design-iconic-font.min.css">
     <%= csrf_meta_tags %>
 
 
@@ -44,7 +45,7 @@
           <% end %>
         </ul>
 
-        <ul class="right">
+        <ul class="right top-menu">
           <li>
             <form>
               <div class="input-field">
@@ -53,6 +54,15 @@
               </div>
             </form>
           </li>
+
+          <% if @current_order.order_items.length > 0 %>
+            <li class="cart">
+              <a href="<%= cart_index_path %>" class="waves-effect">
+                <i class="zmdi zmdi-shopping-cart"></i>
+                <span>$<%= @current_order.total_price %></span>
+              </a>
+            </li>
+          <% end %>
 
           <% if customer_signed_in? %>
             <li>

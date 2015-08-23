@@ -1,3 +1,11 @@
+<div class="row">
+  <div class="col s12">
+    <a href="<%= authors_path %>">
+      <i class="zmdi zmdi-long-arrow-left"></i><%= t(:back).capitalize %>
+    </a>
+  </div>
+</div>
+
 <p id="notice"><%= notice %></p>
 
 <p>
@@ -18,20 +26,47 @@
 <h3><%= t(:books).capitalize %></h3>
 
 <table class="table">
-	<thead>
-		<tr>
-			<th><%= t(:name).capitalize %></th>
-			<th><%= t(:price).capitalize %></th>
-		</tr>
-	</thead>
-	<tbody>
-		<% @author.books_list.each do |book| %>
-			<tr>
-				<td><%= link_to book.title, [book.categories[0], book] %></td>
-				<td>$<%= book.price %></td>
-			</tr>
-		<% end %>
-	</tbody>
+  <thead>
+    <tr>
+      <th><%= t(:name).capitalize %></th>
+      <th><%= t(:price).capitalize %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @author.books_list.each do |book| %>
+      <tr>
+        <td><%= link_to book.title, [book.categories[0], book] %></td>
+        <td>$<%= book.price %></td>
+      </tr>
+    <% end %>
+  </tbody>
 </table>
 
-<%= link_to t(:back).capitalize, authors_path %>
+<div class="row">
+  <div class="col s12">
+    <h3>
+      <%= t(:reviews).capitalize %>
+
+      <% if can? :new, Rating %>
+        <a class="btn-floating btn-large waves-effect waves-light right" href="<%= new_author_rating_path(@author) %>">
+          <i class="material-icons">add</i>
+        </a>
+      <% end %>
+    </h3>
+  </div>
+
+  <div class="col s12">
+    <% @author.ratings.accessible_by(current_ability).each do |item| %>
+      <div class="section">
+        <%= item.review %>
+
+        <% if can? :destroy, item %>
+          <a data-method="delete" data-confirm="<%= t(:are_you_sure).capitalize %>?" href="<%= author_rating_path(@author, item) %>" class="right waves-effect">
+            <i class="material-icons">delete</i>
+          </a>
+        <% end %>
+      </div>
+      <div class="divider"></div>
+    <% end %>
+  </div>
+</div>

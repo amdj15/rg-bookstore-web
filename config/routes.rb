@@ -15,10 +15,11 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :carts, only: [:index], as: "cart", path: "cart"
-
-  resources :order_items, only: [:destroy] do
-    post "add", on: :collection
+  resources :carts, only: [:index], as: "cart", path: "cart" do
+    post :add, on: :collection
+    put :update, on: :collection, as: "update"
+    delete :clear, on: :collection
+    delete ":item_id" => "carts#delete_item", on: :collection, as: "delete_item"
   end
 
   resources :orders, only: [:index, :show] do

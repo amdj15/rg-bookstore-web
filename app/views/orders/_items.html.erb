@@ -1,39 +1,53 @@
-<table>
-  <thead>
-    <tr>
-      <th></th>
-      <th><%= t(:book).upcase %></th>
-      <th><%= t(:price).upcase %></th>
-      <th><%= t(:quantity).upcase %></th>
-      <th><%= t(:total).upcase %></th>
-    </tr>
-  </thead>
-  <tbody>
-    <% locals[:order].order_items.each do |item| %>
-    <tr>
-      <td><%= image_tag item.book.picture_url(:thumb_min) if item.book.picture? %></td>
-      <td><%= link_to item.book.title, category_book_path(item.book.categories[0], item.book) %></td>
-      <td><%= item.quantity %></td>
-      <td><%= item.price %></td>
-      <td><%= item.price * item.quantity %></td>
-    </tr>
-    <% end %>
-  </tbody>
-</table>
+<%= form_tag update_cart_index_path, method: "put" do %>
+  <table>
+    <thead>
+      <tr>
+        <th></th>
+        <th><%= t(:book).upcase %></th>
+        <th><%= t(:quantity).upcase %></th>
+        <th><%= t(:price).upcase %></th>
+        <th><%= t(:total).upcase %></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% locals[:order].order_items.each do |item| %>
+      <tr>
+        <td><%= image_tag item.book.picture_url(:thumb_min) if item.book.picture? %></td>
+        <td><%= link_to item.book.title, category_book_path(item.book.categories[0], item.book) %></td>
+        <td>
+          <%= text_field_tag "items[#{item.id.to_s}][quantity]", item.quantity %>
+        </td>
+        <td><%= item.price %></td>
+        <td><%= item.price * item.quantity %></td>
+        <td>
+          <a href="<%= delete_item_cart_index_path(item) %>" data-method="delete" data-confirm="<%= t(:are_you_sure).capitalize %>?">
+            <i class="zmdi zmdi-delete"></i>
+          </a>
+        </td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
 
-<div class="divider"></div>
+  <div class="row">
+    <div class="col s6">
+      <a href="<%= clear_cart_index_path %>" class="btn waves-effect waves-light" data-method="delete" data-confirm="<%= t(:are_you_sure).capitalize %>?">
+        <%= t(:empty_cart) %>
+        <i class="zmdi zmdi-delete"></i>
+      </a>
+    </div>
 
-<div class="row">
-  <div class="col s4 right">
-    <span>subtotal $<%= locals[:order].total_price %></span>
-    <span>shipping $<%= Order::DELIVERY_TYPES[locals[:order].delivery_type.to_sym][:price] %></span>
+    <div class="col s6 right-align">
+      <button class="btn waves-effect waves-light" type="submit" name="action">
+        <%= t(:update) %>
+        <i class="zmdi zmdi-refresh"></i>
+      </button>
+
+      <a href="<%= checkout_orders_path(Order::STEPS[0]) %>" class="btn waves-effect waves-light">
+        <%= t(:checkout) %>
+        <i class="zmdi zmdi-shopping-cart-plus"></i>
+      </a>
+    </div>
   </div>
-</div>
-
-<div class="divider"></div>
-
-<div class="row">
-  <div class="col s4 right">
-    <span>total $<%= Order::DELIVERY_TYPES[locals[:order].delivery_type.to_sym][:price].to_i + locals[:order].total_price.to_i %></span>
-  </div>
-</div>
+<% end %>

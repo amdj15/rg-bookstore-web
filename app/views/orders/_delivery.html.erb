@@ -1,12 +1,28 @@
 <%= form_tag next_step_orders_path, method: "post" do %>
-	<% Order::DELIVERY_TYPES.each do |item| %>
-		<div class="form-group">
-			<%= label_tag item[1][:title].to_s + ' +$' + item[1][:price].to_s %>
-			<%= radio_button_tag(:delivery_type, item[0]) %>
-		</div>
-	<% end %>
+  <div class="row">
+    <div class="col s8">
+      <h5><%= t(:choose_delivery_type).capitalize %></h5>
 
-	<%= hidden_field_tag "step", Order::STEPS[1] %>
+      <% Order::DELIVERY_TYPES.each do |item| %>
+        <div class="form-group">
+          <input
+              <%= 'checked' if @current_order.delivery_type.to_s == item[0].to_s %>
+              class="with-gap"
+              name="delivery_type"
+              type="radio"
+              id="type_<%= item[0] %>"
+              value="<%= item[0] %>" />
 
-	<%= submit_tag t(:next).capitalize, class: "btn btn-info" %>
+          <label for="type_<%= item[0] %>"><%= item[1][:title].to_s %></label>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="col s4 center-align">
+      <%= render "order_summary" %>
+    </div>
+  </div>
+
+  <%= hidden_field_tag "step", Order::STEPS[1] %>
+  <%= submit_tag t(:next).capitalize, class: "btn btn-info" %>
 <% end %>

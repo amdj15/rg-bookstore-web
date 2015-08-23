@@ -1,34 +1,44 @@
 <%= form_tag next_step_orders_path, method: "post" do %>
-	<div class="form-group">
-		<%= label_tag t(:credit_card).titleize %>
-		<%= text_field_tag "card[number]", @credit_card.number, placeholder: t(:credit_card).titleize, class: "form-control" %>
-	</div>
+  <div class="row">
+    <div class="col s8">
+      <h5><%= t(:credit_card).capitalize %></h5>
 
-	<div class="form-group">
-		<%= label_tag t(:month).titleize %>
-		<%= select_tag "card[month]", options_for_select((1..12).each{|m| [m, m] }, @credit_card.month), class: "form-control" %>
+      <div class="input-field">
+        <%= label_tag t(:credit_card).titleize %>
+        <%= text_field_tag "card[number]", @credit_card.number, class: "form-control" %>
+      </div>
 
-		<%= label_tag t(:year).titleize %>
-		<%= select_tag "card[year]", options_for_select((Time.now.year..(Time.now.year + 10)).each{|m| [m, m] }, @credit_card.year), class: "form-control" %>
-	</div>
+      <div class="form-group">
+        <%= label_tag t(:month).titleize %>
+        <%= select_tag "card[month]", options_for_select((1..12).map{|m| [(m.to_s.length > 1 ? m : "0#{m}")] }, @credit_card.month), class: "form-control" %>
+      </div>
 
-	<div class="form-group">
-		<%= label_tag t(:CVV2).upcase %>
-		<%= text_field_tag "card[CVV]", @credit_card.CVV, placeholder: t(:CVV2).upcase, class: "form-control" %>
-	</div>
+      <div class="form-group">
+        <%= label_tag t(:year).titleize %>
+        <%= select_tag "card[year]", options_for_select((Time.now.year..(Time.now.year + 10)).each{|m| [m, m] }, @credit_card.year), class: "form-control" %>
+      </div>
 
-	<div class="form-group">
-		<%= label_tag t(:first_name).titleize %>
-		<%= text_field_tag "card[firstname]", @credit_card.firstname, placeholder: t(:first_name).titleize, class: "form-control" %>
-	</div>
+      <div class="input-field">
+        <%= label_tag t(:CVV2).upcase %>
+        <%= text_field_tag "card[CVV]", @credit_card.CVV, class: "form-control" %>
+      </div>
 
-	<div class="form-group">
-		<%= label_tag t(:last_name).titleize %>
-		<%= text_field_tag "card[lastname]", @credit_card.lastname, placeholder: t(:last_name).titleize, class: "form-control" %>
-	</div>
+      <div class="input-field">
+        <%= label_tag t(:first_name).titleize %>
+        <%= text_field_tag "card[firstname]", @credit_card.firstname, class: "form-control" %>
+      </div>
 
+      <div class="input-field">
+        <%= label_tag t(:last_name).titleize %>
+        <%= text_field_tag "card[lastname]", @credit_card.lastname, class: "form-control" %>
+      </div>
+    </div>
 
-	<%= hidden_field_tag "step", Order::STEPS[2] %>
+    <div class="col s4 center-align">
+      <%= render "order_summary" %>
+    </div>
+  </div>
 
-	<%= submit_tag t(:next).capitalize, class: "btn btn-info" %>
+  <%= hidden_field_tag "step", Order::STEPS[2] %>
+  <%= submit_tag t(:next).capitalize, class: "btn btn-info" %>
 <% end %>
