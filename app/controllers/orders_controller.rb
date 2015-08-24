@@ -11,6 +11,7 @@ class OrdersController < ApplicationController
   end
 
   def checkout
+    redirect_to cart_index_path if @current_order.order_items.length < 1
   end
 
   def next_step

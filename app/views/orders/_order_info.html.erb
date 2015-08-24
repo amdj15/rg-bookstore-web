@@ -1,42 +1,85 @@
 <div class="row order-info">
-	<div class="col s3">
-		<h6><%= t(:billing_address).capitalize %></h6>
-		<ul class="card-panel">
-			<li><%= @current_order.customer.firstname %> <%= @current_order.customer.lastname %></li>
-			<li><%= @current_order.billing_address.address %></li>
-			<li><%= @current_order.billing_address.city %></li>
-			<li><%= @current_order.billing_address.country.try(:name) %></li>
-			<li><%= t(:phone).capitalize %> <%= @current_order.billing_address.phone %></li>
-		</ul>
-	</div>
+  <div class="col s3">
+    <h6><%= t(:billing_address).capitalize %></h6>
+    <ul class="card-panel">
+      <li><%= @current_order.customer.firstname %> <%= @current_order.customer.lastname %></li>
+      <li><%= @current_order.billing_address.address %></li>
+      <li><%= @current_order.billing_address.city %></li>
+      <li><%= @current_order.billing_address.country.try(:name) %></li>
+      <li><%= t(:phone).capitalize %> <%= @current_order.billing_address.phone %></li>
+    </ul>
+  </div>
 
-	<div class="col s3">
-		<h6><%= t(:shipping_address).capitalize %></h6>
-		<ul class="card-panel">
-			<li><%= @current_order.customer.firstname %> <%= @current_order.customer.lastname %></li>
-			<li><%= @current_order.shipping_address.address %></li>
-			<li><%= @current_order.shipping_address.city %></li>
-			<li><%= @current_order.shipping_address.country.try(:name) %></li>
-			<li><%= t(:phone).capitalize %> <%= @current_order.billing_address.phone %></li>
-		</ul>
-	</div>
+  <div class="col s3">
+    <h6><%= t(:shipping_address).capitalize %></h6>
+    <ul class="card-panel">
+      <li><%= @current_order.customer.firstname %> <%= @current_order.customer.lastname %></li>
+      <li><%= @current_order.shipping_address.address %></li>
+      <li><%= @current_order.shipping_address.city %></li>
+      <li><%= @current_order.shipping_address.country.try(:name) %></li>
+      <li><%= t(:phone).capitalize %> <%= @current_order.billing_address.phone %></li>
+    </ul>
+  </div>
 
-	<% if @current_order.delivery_type %>
-	<div class="col s3">
-		<h6><%= t(:shipments).capitalize %></h6>
-		<ul class="card-panel">
-			<li>
-				<%= Order::DELIVERY_TYPES[@current_order.delivery_type.to_sym][:title] %> - $<%= Order::DELIVERY_TYPES[@current_order.delivery_type.to_sym][:price] %>
-			</li>
-		</ul>
-	</div>
-	<% end %>
+  <% if @current_order.delivery_type %>
+  <div class="col s3">
+    <h6><%= t(:shipments).capitalize %></h6>
+    <ul class="card-panel">
+      <li>
+        <%= Order::DELIVERY_TYPES[@current_order.delivery_type.to_sym][:title] %> - $<%= Order::DELIVERY_TYPES[@current_order.delivery_type.to_sym][:price] %>
+      </li>
+    </ul>
+  </div>
+  <% end %>
 
-	<div class="col s3">
-		<h6><%= t(:payment_information).capitalize %></h6>
-		<ul class="card-panel">
-			<li><%= @current_customer.credit_card.number.gsub(/^[\d]{12}/, (1..12).map{'*'}.join) %></li>
-			<li><%= @current_customer.credit_card.month %>/<%= @current_customer.credit_card.year %></li>
-		</ul>
-	</div>
+  <div class="col s3">
+    <h6><%= t(:payment_information).capitalize %></h6>
+    <ul class="card-panel">
+      <li><%= @current_customer.credit_card.number.gsub(/^[\d]{12}/, (1..12).map{'*'}.join) %></li>
+      <li><%= @current_customer.credit_card.month %>/<%= @current_customer.credit_card.year %></li>
+    </ul>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col s12">
+    <table>
+      <thead>
+        <tr>
+          <th></th>
+          <th><%= t(:book).upcase %></th>
+          <th><%= t(:quantity).upcase %></th>
+          <th><%= t(:price).upcase %></th>
+          <th><%= t(:total).upcase %></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @current_order.order_items.each do |item| %>
+        <tr>
+          <td><%= image_tag item.book.picture_url(:thumb_min) if item.book.picture? %></td>
+          <td><%= link_to item.book.title, category_book_path(item.book.categories[0], item.book) %></td>
+          <td><%= item.quantity %></td>
+          <td><%= item.price %></td>
+          <td><%= item.price * item.quantity %></td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col s12">
+    <ul class="bottom-summary right-align">
+      <li><%= t(:items_total).capitalize %>: $<%= @current_order.items_price %></li>
+
+      <% if @current_order.delivery_type %>
+      <li><%= t(:shipping).capitalize %>: $<%= Order::DELIVERY_TYPES[@current_order.delivery_type.to_sym][:price] %></li>
+      <% end %>
+    </ul>
+
+    <ul class="bottom-summary right-align">
+      <li><%= t(:order_total).capitalize %>: $<%= @current_order.total_price %></li>
+    </ul>
+  </div>
 </div>
