@@ -1,25 +1,17 @@
-<h1><%= t(:books_list).capitalize %></h1>
+<h1><%= t(:top_books).capitalize %></h1>
 
-<table class="table">
-  <thead>
-    <tr>
-      <th><%= t(:title).capitalize %></th>
-      <th><%= t(:description).capitalize %></th>
-      <th><%= t(:books_in_stock).capitalize %></th>
-      <th><%= t(:category).capitalize %></th>
-    </tr>
-  </thead>
-
-  <tbody>
+<div class="slider">
+  <ul class="slides">
     <% @books.each do |book| %>
-      <tr>
-        <td><%= link_to book.title, [book.categories[0], book] %></td>
-        <td><%= book.description %></td>
-        <td><%= book.books_in_stock %></td>
-        <td><%= link_to book.categories[0].title, book.categories[0] %></td>
-      </tr>
+      <% present book do |book_presenter| %>
+        <li>
+          <%= book_presenter.image %>
+          <div class="caption center-align">
+            <h3><%= book_presenter.link %></h3>
+            <h5 class="light grey-text text-lighten-3"><%= book_presenter.short_info %></h5>
+          </div>
+        </li>
+      <% end %>
     <% end %>
-  </tbody>
-</table>
-
-<%= paginate @books %>
+  </ul>
+</div>

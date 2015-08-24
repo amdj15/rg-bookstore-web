@@ -3,7 +3,7 @@ class BooksController < ApplicationController
   authorize_resource
 
   def all
-    @books = Book.includes(:categories).page params[:page]
+    @books = Book.top_sales
   end
 
   # GET /books/1
