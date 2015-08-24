@@ -31,7 +31,7 @@ class BookPresenter < BasePresenter
   end
 
   def ratings
-    book.ratings.accessible_by(h.current_ability)
+    book.ratings.accessible_by(h.current_ability).includes(:item)
   end
 
 private
