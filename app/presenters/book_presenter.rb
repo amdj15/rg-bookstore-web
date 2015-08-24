@@ -21,7 +21,11 @@ class BookPresenter < BasePresenter
   end
 
   def descr_format
-    h.simple_format(book.description)
+    if book.description.length > 0
+      h.simple_format(book.description)
+    else
+      h.content_tag(:span, h.t(:no_description_yet), class: "empty")
+    end
   end
 
   def add_review_btn(category)
