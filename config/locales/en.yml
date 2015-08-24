@@ -102,6 +102,7 @@ en:
   order_total: "order total"
   update: "update"
   empty_cart: "empty cart"
+  no_description_yet: "no description yet"
   choose_delivery_type: "choose delivery type"
   cannot_change_state: "cannot change state"
   shipping: "shipping"

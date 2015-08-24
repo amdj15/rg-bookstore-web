@@ -1,0 +1,20 @@
+<% locals[:books].each do |book| %>
+  <% present book do |book_presenter| %>
+    <div class="row">
+      <div class="col s12">
+        <div class="card">
+          <div class="card-image">
+            <%= book_presenter.image %>
+            <span class="card-title"><%= book_presenter.title %></span>
+          </div>
+          <div class="card-content">
+            <p><%= book_presenter.short_info %></p>
+          </div>
+          <div class="card-action">
+            <%= book_presenter.link(@category) %>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+<% end %>

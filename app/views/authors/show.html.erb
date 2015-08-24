@@ -8,65 +8,56 @@
 
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong><%= t(:name).capitalize %>:</strong>
-  <%= @author.firstname %>
-</p>
+<% present @author do |author_presenter| %>
+  <h2><%= author_presenter.fullname %></h2>
 
-<p>
-  <strong><%= t(:last_name).capitalize %>:</strong>
-  <%= @author.lastname %>
-</p>
+  <%= author_presenter.bio %>
 
-<p>
-  <strong><%= t(:biography).capitalize %>:</strong>
-  <%= @author.biography %>
-</p>
+  <h3><%= t(:books).capitalize %></h3>
 
-<h3><%= t(:books).capitalize %></h3>
-
-<table class="table">
-  <thead>
-    <tr>
-      <th><%= t(:name).capitalize %></th>
-      <th><%= t(:price).capitalize %></th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @author.books_list.each do |book| %>
+  <table class="table">
+    <thead>
       <tr>
-        <td><%= link_to book.title, [book.categories[0], book] %></td>
-        <td>$<%= book.price %></td>
+        <th><%= t(:name).capitalize %></th>
+        <th><%= t(:price).capitalize %></th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<div class="row">
-  <div class="col s12">
-    <h3>
-      <%= t(:reviews).capitalize %>
-
-      <% if can? :new, Rating %>
-        <a class="btn-floating btn-large waves-effect waves-light right" href="<%= new_author_rating_path(@author) %>">
-          <i class="material-icons">add</i>
-        </a>
+    </thead>
+    <tbody>
+      <% author_presenter.books.each do |book| %>
+        <tr>
+          <% present book do |book_presenter| %>
+          <td><%= book_presenter.link %></td>
+          <td>$<%= book_presenter.price %></td>
+          <% end %>
+        </tr>
       <% end %>
-    </h3>
-  </div>
+    </tbody>
+  </table>
 
-  <div class="col s12">
-    <% @author.ratings.accessible_by(current_ability).each do |item| %>
-      <div class="section">
-        <%= item.review %>
+  <div class="row">
+    <div class="col s12">
+      <h3>
+        <%= t(:reviews).capitalize %>
+        <%= author_presenter.add_review_btn %>
+      </h3>
+    </div>
 
-        <% if can? :destroy, item %>
-          <a data-method="delete" data-confirm="<%= t(:are_you_sure).capitalize %>?" href="<%= author_rating_path(@author, item) %>" class="right waves-effect">
-            <i class="material-icons">delete</i>
-          </a>
-        <% end %>
-      </div>
-      <div class="divider"></div>
-    <% end %>
+    <div class="col s12">
+      <% author_presenter.ratings.each do |rating| %>
+        <div class="section">
+          <% present rating do |rating_presenter| %>
+            <div class="stars">
+              <%= rating_presenter.stars %>
+            </div>
+
+            <div>
+              <%= rating_presenter.review %>
+              <%= rating_presenter.destroy_btn %>
+            </div>
+          <% end %>
+        </div>
+        <div class="divider"></div>
+      <% end %>
+    </div>
   </div>
-</div>
+<% end %>
