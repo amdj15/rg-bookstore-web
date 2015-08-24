@@ -11,8 +11,8 @@ class BookPresenter < BasePresenter
     end
   end
 
-  def image(class_name: "")
-    h.image_tag book.picture_url, class: class_name if book.picture?
+  def image(class_name: "", thumb: nil)
+    h.image_tag book.picture_url(thumb), class: class_name if book.picture?
   end
 
   def link(category = nil)
